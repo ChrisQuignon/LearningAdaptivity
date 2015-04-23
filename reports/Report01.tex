@@ -1,0 +1,131 @@
+%\documentclass{beamer}
+%\usetheme{Pittsburgh}
+\documentclass{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage{default}
+\usepackage[procnames]{listings}
+\usepackage{graphicx}
+%\usepackage[toc,page]{appendix}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{csvsimple}
+\usepackage{float}
+\usepackage[T1]{fontenc}
+
+
+
+%Bibliogrpahy?
+%\usepackage{bibentry}
+%\nobibliography*
+%\bibentry{ }
+
+
+%Python
+\definecolor{keywords}{RGB}{255,0,90}
+\definecolor{comments}{RGB}{0,0,113}
+\definecolor{red}{RGB}{160,0,0}
+\definecolor{green}{RGB}{0,150,0}
+\lstset{language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{keywords},
+    commentstyle=\color{comments},
+    stringstyle=\color{red},
+    identifierstyle=\color{green},
+    breaklines = true,
+    columns=fullflexible,
+    %Numbering and tabs
+    %numbers=left,
+    %numberstyle=\tiny\color{gray},
+    %stepnumber=2,
+    %numbersep=1em,
+    tabsize=4,
+    showspaces=false,
+    showstringspaces=false}
+
+\begin{document}
+
+\title{Learning and Adaptivity}
+\subtitle{Report No. 1}
+\author{
+  Quignon, Christophe
+  %Familyname, Name
+}
+\date{\today}
+
+
+\maketitle
+
+\section{Data visualisation}
+\subsection{Data description}
+
+Weather
+Sensor
+%almost a year
+
+\subsection{Quantisation}
+The data spans the time between July 2014 to February 2015, with a total of 727 days.
+
+\subsubsection{Weather data}
+The regional weather is from the official recordings of the "Deutsche Wetterdienst" (german weather service) and contains:
+
+\begin{itemize}
+\item temperature in $^\circ C$
+\item relative air humidity in percent
+\item precipitation in mm (1 liter per square meter)
+\end{itemize}
+
+One set of value is recorded every hour.
+
+\subsubsection{Sensor data}
+The Measurements from the systems are:
+
+\begin{itemize}
+\item Volumetric flow rate in $m^3 / s$
+\item Rate of heat flow in watts
+\item supply temperature in $^\circ C$
+\item return temperature $^\circ C$
+\item Energy in $Nm$
+\end{itemize}
+
+The sensors are read once every minute, with a total of 1440 measurements a day. In addition, the energy is calculated per hour.\\
+
+That makes a total of 4,239,864 measurements.
+
+
+%CONTENTS
+%NOTES
+
+
+%COPY AND PASTE FROM HERE
+
+%\begin{enumerate}
+% \item
+%\end{enumerate}
+
+%\href{link}{text}
+
+%\begin[Language=Python]{lstlisting}
+%#PYTHON CODE HERE
+%\end{lstlisting}
+
+%\lstinputlisting[language=Python]{	}
+
+%\csvautotabular[separator=semicolon]{data.csv}
+
+%\subsubsection{left}
+%\begin{figure}[H]
+%  \centering
+%  \includegraphics[width=0.5\linewidth]{../img/	}
+%  %\caption{}
+%  %\label{fig:}
+%\end{figure}
+%PUT UNITS ON THE FIGURES
+
+%BIBLIOGRPAHY?
+%\bibliographystyle{plain}%amsalpha
+%\bibliography{Top30.bib}
+%\bibentry{}
+
+\end{document}
