@@ -125,8 +125,6 @@ The regional weather is from the official recordings of the "Deutsche Wetterdien
 \item Precipitation in mm (1 litre per square meter)
 \end{itemize}
 
-One set of value is recorded every hour.
-
 \paragraph{Sensor data:}
 The Measurements from the systems are:
 
@@ -137,14 +135,8 @@ The Measurements from the systems are:
 \item Return temperature $^\circ C$
 \end{itemize}
 
-The sensors are read once every minute, with a total of 1440 measurements a day. In addition, the energy is calculated per hour.\\
-
 \paragraph{Accumulated data:}
-The Energy in $Nm$ in calculated per day.\\
-
-\noindent
-That makes a total of 1,411,586 measurements at 348,480 dates.\\
-The actual dataset however contains 1,371,050 data points at only 344,160 measure points.
+The Energy in $Nm$ in calculated per day.
 
 \paragraph{Feasibility}
 I expect the training to take a long time, but I fail to estimate it. But the amount of data allows scaling without dropping under a critical amount of datasets. The same holds true for the features which can be cut off or condensed. Often the difference of heatflow is used, or the humidity can be ignored.\\
