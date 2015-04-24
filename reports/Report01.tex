@@ -59,10 +59,12 @@
 
 \section{Data visualisation}
 \subsection{Data description}
+The data comes from two main sources:
+\begin{itemize}
+\item Sensors on a heat pump that sense the various state parameters of the system
+\item Weather data which is the main source of input to the system
+\end{itemize}
 
-Weather
-Sensor
-%almost a year
 
 \subsection{Quantisation}
 The data spans the time between July 2014 to February 2015, with a total of 242 days.
@@ -71,9 +73,9 @@ The data spans the time between July 2014 to February 2015, with a total of 242 
 The regional weather is from the official recordings of the "Deutsche Wetterdienst" (german weather service) and contains:
 
 \begin{itemize}
-\item temperature in $^\circ C$
-\item relative air humidity in percent
-\item precipitation in mm (1 liter per square meter)
+\item Temperature in $^\circ C$
+\item Relative air humidity in percent
+\item Precipitation in mm (1 litre per square meter)
 \end{itemize}
 
 One set of value is recorded every hour.
@@ -84,8 +86,8 @@ The Measurements from the systems are:
 \begin{itemize}
 \item Volumetric flow rate in $m^3 / s$
 \item Rate of heat flow in watts
-\item supply temperature in $^\circ C$
-\item return temperature $^\circ C$
+\item Supply temperature in $^\circ C$
+\item Return temperature $^\circ C$
 \end{itemize}
 
 The sensors are read once every minute, with a total of 1440 measurements a day. In addition, the energy is calculated per hour.\\
@@ -97,7 +99,54 @@ The Energy in $Nm$ in calculated per day.\\
 That makes a total of 1,411,586 measurements at 348,480 dates.\\
 The actual dataset however contains 1,371,050 data points at only 344,160 measure points.
 
+\subsection{Figures}
+The amount and variety of the data can hardly be visualised in static images. With the javascript library "Highcharts" the data can be scaled, selected and compared flexible. Here, I can only show the single graphs:
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{../img/Leistung.png}
+  \caption{Rate of heat flow in watts}
+  %\label{fig:}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{../img/Volumenstrom.png}
+  \caption{Volumetric flow rate in $m^3 / s$}
+  %\label{fig:}
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{../img/Energie.png}
+  \caption{The Energy in $Nm$ in calculated per day}
+  %\label{fig:}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{../img/lauftemperature.png}
+  \caption{Supply-(red) and return temperature (yellow) in $^\circ C$}
+  %\label{fig:}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{../img/temp_feuchte.png}
+  \caption{Outside temperature in $^\circ C$ (green) and relative air humidity in percent(orange)}
+  %\label{fig:}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\linewidth]{../img/niederschlag.png}
+  \caption{Precipitation in mm (1 litre per square meter)}
+  %\label{fig:}
+\end{figure}
+
+\subsection{Comments}
+As the figures show, the behaviour of the system changed quite dramatically over the time. Hence it is not sure whether a prediction can handle this change.
 %CONTENTS
 %NOTES
 

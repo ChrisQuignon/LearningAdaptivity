@@ -6,12 +6,15 @@ import csv
 import numpy as np
 from datetime import datetime
 
+import sys
+
+
 
 #target data structure
 ds = []
 
 #IMPORT FILE
-input_file = csv.DictReader(open("data/ds1_weather.csv"), delimiter=';',)
+input_file = csv.DictReader(open("../data/ds1_weather.csv"), delimiter=';',)
 for row in input_file:
 
     d = {}
@@ -55,8 +58,8 @@ for row in input_file:
             elif key == 'Aussentemperatur':
                 d[key] = float(row['Aussentemperatur'])
 
-            elif key == 'Relative Feuchte':
-                d[key] = int(row['Relative Feuchte'])
+            elif key == 'Relative_Feuchte':
+                d[key] = int(row['Relative_Feuchte'])
 
             elif key == 'Niederschlag':
                 d[key] = float(row['Niederschlag'])
@@ -65,4 +68,32 @@ for row in input_file:
                 print 'ERROR: Key ' + key + 'not known'
 
     ds.append(d)
-print len(ds)
+# print len(ds)
+
+#GENERATE HIGHCHARTS .js file
+
+listedd = {}
+
+for d in ds:
+    for key in filter(lambda x : 'Date' not in x, d.keys()):
+        if not key in listedd.keys():
+            listedd[key] = [[d['Date'], d[key]]]
+        else:
+            listedd[key].append([d['Date'], d[key]])
+
+for key in listedd:
+    sys.stdout.write("var " + key +"=")
+    sys.stdout.write("[")
+
+    for idx, entry in enumerate(listedd[key]):
+        date, val = entry
+        if idx == 0:
+            sys.stdout.write('[' + date.strftime("%s000") + ', ' + str(val) + ']')
+        else:
+            sys.stdout.write(',\n [' + date.strftime("%s000") + ', ' + str(val) + ']')
+    sys.stdout.write('];\n')
+
+
+#
+# l = []
+# s = "{\n \n name: '" + key +"',\n data: "

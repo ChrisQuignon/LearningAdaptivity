@@ -3,6 +3,8 @@
 /data
 #sorry...
 
+/visualisation/vars.js
+
 /img
 
 ##General
@@ -63,7 +65,7 @@ docs/_build/
 
 ##LATEX (from https://github.com/github/gitignore/blob/master/TeX.gitignore)
 
-.tex.swp
+*.tex.swp
 
 # Core latex/pdflatex auxiliary files:
 *.aux

@@ -1,0 +1,137 @@
+<html>
+<head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <!--<script type="text/javascript" src="tools.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <script src="http://code.highcharts.com/stock/highstock.js"></script>
+  <script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
+
+  <script src="vars.js"></script>
+
+
+  <div id="container"></div>
+  <script>
+
+  $('#container').highcharts('StockChart', {
+
+    rangeSelector: {
+      selected: 4,
+      enabled:true
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    exporting:{
+      scale: 1
+    },
+
+    navigator:{
+      enabled:true
+    },
+
+    scrollbar:{
+      enabled:true
+    },
+
+    // yAxis: {
+    //   labels: {
+    //     formatter: function () {
+    //       return (this.value > 0 ? ' + ' : '') + this.value ;
+    //     }
+    //   },
+    //   plotLines: [{
+    //     value: 0,
+    //     width: 2,
+    //     color: 'silver'
+    //   }]
+    // },
+
+    // plotOptions: {
+    //   series: {
+    //     compare: 'percent'
+    //   }
+    // },
+
+    tooltip: {
+      pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> <br/>',//({point.change}%)
+      valueDecimals: 2
+    },
+
+    //series: seriesOptions
+
+
+    legend: {
+        enabled: true,
+    },
+
+    series:[
+    {
+
+      name: 'Leistung',
+      data:  Leistung,
+      id:'Leistung',
+      visible: true
+    },
+    {
+
+      name: 'Energie',
+      data:  Energie,
+      id:'Energie',
+      visible: true
+    },
+    {
+
+      name: 'Relative_Feuchte',
+      data:  Relative_Feuchte,
+      id:'Relative_Feuchte',
+      visible: true
+    },
+    {
+
+      name: 'Aussentemperatur',
+      data:  Aussentemperatur,
+      id:'Aussentemperatur',
+      visible: true
+    },
+    {
+
+      name: 'Volumenstrom',
+      data: Volumenstrom,
+      id: 'Volumenstrom',
+      visible: true
+    },
+    {
+
+      name: 'Vorlauftemperatur',
+      data:  Vorlauftemperatur,
+      id:'Vorlauftemperatur',
+      visible: true
+      },
+    {
+      name: 'Ruecklauftemperatur',
+      data:  Ruecklauftemperatur,
+      id:'Ruecklauftemperatur',
+      visible: true
+    },
+    {
+
+      name: 'Niederschlag',
+      data:  Niederschlag,
+      id:'Niederschlag',
+      visible: true
+    }
+    ]
+  });
+
+
+  </script>
+
+
+
+
+</body>
+</html>
