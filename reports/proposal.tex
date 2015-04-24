@@ -1,0 +1,162 @@
+%%% LaTeX Template: Two column assignment for BRSU
+%%% Based on two column article from: http://www.howtotex.com/
+%%% Preamble
+\documentclass[	DIV=calc,%
+				paper=a4,%
+				fontsize=11pt,%
+				twocolumn]{scrartcl}	 % KOMA-article class
+
+\usepackage{lipsum}	% Package to create dummy text
+\usepackage{blindtext}
+\usepackage[english]{babel}	                          % English language/hyphenation
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{amsmath,amsfonts,amsthm}					 % Math packages
+\usepackage[pdftex]{graphicx}	                          % Enable pdflatex
+\usepackage[svgnames]{xcolor}	                          % Enabling colors by their 'svgnames'
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats
+\usepackage{epstopdf}	 % Converts .eps to .pdf
+\usepackage{subfig}	     % Subfigures
+\usepackage{booktabs}	 % Nicer tables
+\usepackage{fix-cm}       % Custom fontsizes
+\usepackage{listings}
+\usepackage{soul}
+
+%%% Custom sectioning (sectsty package)
+\usepackage{sectsty}	 % Custom sectioning (see below)
+\allsectionsfont{%% Change font of al section commands
+	\usefont{OT1}{phv}{b}{n}%% bch-b-n: CharterBT-Bold font
+	}
+
+\sectionfont{%% Change font of \section command
+	\usefont{OT1}{phv}{b}{n}%% bch-b-n: CharterBT-Bold font
+	}
+
+
+\definecolor{brsugrey}{rgb}{0.9, 0.9, 0.9}
+\definecolor{brsublue}{rgb}{0, 0.594, 0.949}
+
+
+\newcommand{\upperRomannumeral}[1]{\uppercase\expandafter{\romannumeral#1}}
+
+%%% Headers and footers
+\usepackage{fancyhdr} % Needed to define custom headers/footers
+	\pagestyle{fancy} % Enabling the custom headers/footers
+\usepackage{lastpage}	
+
+% Header (empty)
+\lhead{}
+\chead{}
+\rhead{}
+% Footer (you may change this to your own needs)
+\lfoot{\footnotesize 
+\texttt{LAA} % Set to the course abbreviation 
+\textbullet ~ Quignon % Set to your name
+\textbullet ~ Project Proposal} % Set the assignment number
+\cfoot{}
+\rfoot{\footnotesize page \thepage\ of \pageref{LastPage}}	% "Page 1 of 2"
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+
+%%% Creating an initial of the very first character of the content
+\usepackage{lettrine}
+\newcommand{\initial}[1]{%
+     \lettrine[lines=3,lhang=0.3,nindent=0em]{
+     				\color{brsublue}
+     				{\textsf{#1}}}{}}
+
+%%% Title, author and date metadata
+\usepackage{titling}	% For custom titles
+
+\newcommand{\HorRule}{\color{brsublue}% Creating a horizontal rule
+					 \rule{\linewidth}{1pt}%
+					 \color{black}
+					 }
+
+\pretitle{\vspace{-30pt} \begin{flushleft} \HorRule 
+				\fontsize{25}{25} \usefont{OT1}{phv}{b}{n} \color{gray} \selectfont 
+				}
+\title{Learning and Adaptivity
+\\ Project Proposal}% Title of your article goes here
+\posttitle{\par\end{flushleft}\vskip 0.5em}
+
+\preauthor{\begin{flushleft}
+\large \lineskip 0.25em \usefont{OT1}{phv}{b}{sl} \color{brsublue}}
+\author{Christophe Quignon }	% Author name goes here
+\postauthor{\footnotesize \usefont{OT1}{phv}{m}{sl} \color{Black} 
+BRS University of Applied Sciences % Institution of author
+\\email: cuignon@gmail.com ~github: @ChrisQuignon
+\par\end{flushleft}\HorRule}
+
+\date{\today} 
+
+%%% Begin document
+\begin{document}
+\maketitle
+\thispagestyle{fancy} % Enabling the custom headers/footers for the first page 
+\section{Objective}
+% - What is it you would like to use Machine Learning to do?
+%• What area of ML does it fall into? (e.g. prediction, classification)
+%• Why are you interested in this? Why should others be interested in this? Where would you take this if you had more than 5 weeks?
+Heatpumps are a sustainable way to transfer thermal energy into out away from builds to keep a comfortable temperature. But to operate a heating pump is not a trivial task, different building distribute the heat differently and weather with its chaotic nature has a mayor influence on the temperature flow. In addition, they suffer from a suboptimal efficiency because they often have a bad time delay from sensing to acting. This could be counteracted by predicting future temperatures to overact sensors. efficiency could be increased by predicting energy consumption and delay that to times where energy is cheap.\\
+Thus I want to predict the behaviour or an energy pump with respect to the weather.
+
+\section{Data}
+The Recogizer GmbH provided me a dataset of 4 sensor reading, three weather indicators and an accumulated energy consumption. In 242 days, over 1,300,000 data points where collected. The aim is to predict 3 hours in advance. If necessary, a rough estimate of the weather can be used, since weather forecast of three hours in quite accurate.
+
+
+\section{Method}
+% Which Machine Learning algorithm or Method do you plan to use?
+%• Which Programming Language \& Library do you plan to use?
+I will use python, and there the sklearn library.
+For the method I tend towards Boltzmann machines, because they are a generative method. That means the result can not only be measured by the error, but by visual comparison and with expert opinion.
+An alternative where decision trees which after learning can be easily adapted into rule sets to control the heatpump.
+
+\subsection{Features}
+The data spans the time between July 2014 to February 2015, with a total of 242 days.
+
+\paragraph{Weather data:}
+The regional weather is from the official recordings of the "Deutsche Wetterdienst" (german weather service) and contains:
+
+\begin{itemize}
+\item Temperature in $^\circ C$
+\item Relative air humidity in percent
+\item Precipitation in mm (1 litre per square meter)
+\end{itemize}
+
+One set of value is recorded every hour.
+
+\paragraph{Sensor data:}
+The Measurements from the systems are:
+
+\begin{itemize}
+\item Volumetric flow rate in $m^3 / s$
+\item Rate of heat flow in watts
+\item Supply temperature in $^\circ C$
+\item Return temperature $^\circ C$
+\end{itemize}
+
+The sensors are read once every minute, with a total of 1440 measurements a day. In addition, the energy is calculated per hour.\\
+
+\paragraph{Accumulated data:}
+The Energy in $Nm$ in calculated per day.\\
+
+\noindent
+That makes a total of 1,411,586 measurements at 348,480 dates.\\
+The actual dataset however contains 1,371,050 data points at only 344,160 measure points.
+
+\paragraph{Feasibility}
+I expect the training to take a long time, but I fail to estimate it. But the amount of data allows scaling without dropping under a critical amount of datasets. The same holds true for the features which can be cut off or condensed. Often the difference of heatflow is used, or the humidity can be ignored.\\
+I already have some experience with the NN library sklearn and plan to build upon this.
+\section{Milestones}
+Per week:
+\begin{enumerate}
+\item Visualisation
+\item Dummy run on a subset
+\item Full run
+\item Evaluation for a set of parameters by test errors and runtime
+\item Iteration with the most promising parameters/. Comparison of the prediction and the actual values
+\end{enumerate}
+
+\end{document}
