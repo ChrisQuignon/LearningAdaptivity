@@ -51,6 +51,7 @@
 \lfoot{\footnotesize 
 \texttt{LAA} % Set to the course abbreviation 
 \textbullet ~ Quignon % Set to your name
+\textbullet ~ Ali % Set to your name
 \textbullet ~ Project Proposal} % Set the assignment number
 \cfoot{}
 \rfoot{\footnotesize page \thepage\ of \pageref{LastPage}}	% "Page 1 of 2"
@@ -83,7 +84,7 @@
 
 \preauthor{\begin{flushleft}
 \large \lineskip 0.25em \usefont{OT1}{phv}{b}{sl} \color{brsublue}}
-\author{Christophe Quignon }	% Author name goes here
+\author{Christophe Quignon, Daiem Nadir Ali }	% Author name goes here
 \postauthor{\footnotesize \usefont{OT1}{phv}{m}{sl} \color{Black} 
 BRS University of Applied Sciences % Institution of author
 \\email: cuignon@gmail.com ~github: @ChrisQuignon
@@ -99,7 +100,7 @@ BRS University of Applied Sciences % Institution of author
 % - What is it you would like to use Machine Learning to do?
 %• What area of ML does it fall into? (e.g. prediction, classification)
 %• Why are you interested in this? Why should others be interested in this? Where would you take this if you had more than 5 weeks?
-Heatpumps are a sustainable way to transfer thermal energy into out away from builds to keep a comfortable temperature. But to operate a heating pump is not a trivial task, different building distribute the heat differently and weather with its chaotic nature has a mayor influence on the temperature flow. In addition, they suffer from a suboptimal efficiency because they often have a bad time delay from sensing to acting. This could be counteracted by predicting future temperatures to overact sensors. efficiency could be increased by predicting energy consumption and delay that to times where energy is cheap.\\
+Heat pumps are a sustainable way to transfer thermal energy into out away from builds to keep a comfortable temperature. But to operate a heating pump is not a trivial task, different building distribute the heat differently and weather with its chaotic nature has a major influence on the temperature flow. In addition, they suffer from a suboptimal efficiency because they often have a bad time delay from sensing to acting. This could be counteracted by predicting future temperatures to overact sensors. efficiency could be increased by predicting energy consumption and delay that to times where energy is cheap.\\
 Thus I want to predict the behaviour or an energy pump with respect to the weather.
 
 \section{Data}
@@ -111,13 +112,13 @@ The Recogizer GmbH provided me a dataset of 4 sensor reading, three weather indi
 %• Which Programming Language \& Library do you plan to use?
 I will use python, and there the sklearn library.
 For the method I tend towards Boltzmann machines, because they are a generative method. That means the result can not only be measured by the error, but by visual comparison and with expert opinion.
-An alternative where decision trees which after learning can be easily adapted into rule sets to control the heatpump.
+An alternative where decision trees which after learning can be easily adapted into rule sets to control the heat-pump.
 
 \subsection{Features}
 The data spans the time between July 2014 to February 2015, with a total of 242 days.
 
 \paragraph{Weather data:}
-The regional weather is from the official recordings of the "Deutsche Wetterdienst" (german weather service) and contains:
+The regional weather is from the official recordings of the "Deutsche Wetterdienst" (German weather service) and contains:
 
 \begin{itemize}
 \item Temperature in $^\circ C$
@@ -139,8 +140,8 @@ The Measurements from the systems are:
 The Energy in $Nm$ in calculated per day.
 
 \paragraph{Feasibility}
-I expect the training to take a long time, but I fail to estimate it. But the amount of data allows scaling without dropping under a critical amount of datasets. The same holds true for the features which can be cut off or condensed. Often the difference of heatflow is used, or the humidity can be ignored.\\
-I already have some experience with the NN library sklearn and plan to build upon this.
+I expect the training to take a long time, but I fail to estimate it. But the amount of data allows scaling without dropping under a critical amount of datasets. The same holds true for the features which can be cut off or condensed. Often the difference of heat flow is used, or the humidity can be ignored.\\
+I already have some experience with the N.N. library 'sklearn' and plan to build upon this.
 \section{Milestones}
 Per week:
 \begin{enumerate}
