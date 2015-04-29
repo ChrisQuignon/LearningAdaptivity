@@ -25,18 +25,9 @@ for row in input_file:
         if row[key]:
             #date
             if key == 'Date':
-
                 #DD.MM.YYYY HH:MM:SS
-                date, time = row['Date'].split(' ')
+                d[key] = datetime.strptime(row[key], '%d.%m.%Y %H:%M:%S')
 
-                DD, MM, YYYY = map(int, date.split('.'))
-
-                hh, mm, ss = map(int, time.split(':'))
-                d[key] = datetime(year=YYYY,
-                                month=MM,
-                                day=DD,
-                                hour=hh
-                                )
             #sensors: minute
             elif key ==  'Leistung':
                 d[key] =float(row['Leistung'])
