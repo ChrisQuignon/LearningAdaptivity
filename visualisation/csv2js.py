@@ -6,6 +6,9 @@ import csv
 import numpy as np
 from datetime import datetime
 
+import sys
+
+
 
 #target data structure
 ds = []
@@ -65,4 +68,32 @@ for row in input_file:
                 print 'ERROR: Key ' + key + 'not known'
 
     ds.append(d)
-print len(ds)
+# print len(ds)
+
+#GENERATE HIGHCHARTS .js file
+
+listedd = {}
+
+for d in ds:
+    for key in filter(lambda x : 'Date' not in x, d.keys()):
+        if not key in listedd.keys():
+            listedd[key] = [[d['Date'], d[key]]]
+        else:
+            listedd[key].append([d['Date'], d[key]])
+
+for key in listedd:
+    sys.stdout.write("var " + "".join(key.split()) +"=")
+    sys.stdout.write("[")
+
+    for idx, entry in enumerate(listedd[key]):
+        date, val = entry
+        if idx == 0:
+            sys.stdout.write('[' + date.strftime("%s000") + ', ' + str(val) + ']')
+        else:
+            sys.stdout.write(',\n [' + date.strftime("%s000") + ', ' + str(val) + ']')
+    sys.stdout.write('];\n')
+
+
+#
+# l = []
+# s = "{\n \n name: '" + key +"',\n data: "

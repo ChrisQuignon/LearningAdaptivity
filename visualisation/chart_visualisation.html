@@ -3,6 +3,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <!--<script type="text/javascript" src="tools.js"></script>-->
     <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
 </head>
 <body>
   <script src="http://code.highcharts.com/stock/highstock.js"></script>
@@ -17,51 +18,81 @@
   $('#container').highcharts('StockChart', {
 
     rangeSelector: {
-      selected: 4,
-      enabled:true
+      selected: 4
+    },
+    chart: {
+        zoomType: 'xy'
     },
 
     credits: {
         enabled: false
     },
 
-    exporting:{
-      scale: 1
+    rangeSelector:{
+      enabled:false
     },
 
-    navigator:{
-      enabled:true
-    },
+    yAxis:[{
+              labels: {
+                format: '{value} Watt',
+              },
+              title: {
+                  text: 'Power',
+              },
+              opposite: true
+            },
+            {
+                labels: {
+                    format: '{value} °C',
+                },
+                title: {
+                    text: 'Temperatures',
+                },
+                opposite: false
+            },
+            {
+                labels: {
+                    format: '{value} m³/s',
+                },
+                title: {
+                    text: 'Volumetric flow rate',
+                },
+                opposite: true
+            },
+            {
+                labels: {
+                    format: '{value} kWh',
+                },
+                title: {
+                    text: 'Energy',
+                },
+                opposite: true
+            },
+            {
+                labels: {
+                    format: '{value} %',
+                },
+                title: {
+                    text: 'Relative air humidity',
+                },
+                opposite: false
+            },
+            {
+                labels: {
+                    format: '{value} l/m²',
+                },
+                title: {
+                    text: 'Precipitation',
+                },
+                opposite: false
+            },
 
-    scrollbar:{
-      enabled:true
-    },
-
-    // yAxis: {
-    //   labels: {
-    //     formatter: function () {
-    //       return (this.value > 0 ? ' + ' : '') + this.value ;
-    //     }
-    //   },
-    //   plotLines: [{
-    //     value: 0,
-    //     width: 2,
-    //     color: 'silver'
-    //   }]
-    // },
-
-    // plotOptions: {
-    //   series: {
-    //     compare: 'percent'
-    //   }
-    // },
+            ],
 
     tooltip: {
       pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> <br/>',//({point.change}%)
       valueDecimals: 2
     },
-
-    //series: seriesOptions
 
 
     legend: {
@@ -71,60 +102,82 @@
     series:[
     {
 
-      name: 'Leistung',
+      name: 'Power',
       data:  Leistung,
+      yAxis: 0,
       id:'Leistung',
-      visible: true
+      tooltip: {
+                valueSuffix: ' W'
+            }
     },
     {
-
-      name: 'Energie',
+      name: 'Energy',
       data:  Energie,
+      yAxis: 3,
       id:'Energie',
-      visible: true
+      tooltip: {
+                valueSuffix: ' kWh'
+            }
     },
     {
 
-      name: 'Relative_Feuchte',
-      data:  Relative_Feuchte,
+      name: 'Relative air humidity',
+      data:  RelativeFeuchte,
+      yAxis: 4,
       id:'Relative_Feuchte',
-      visible: true
+      tooltip: {
+                valueSuffix: '%'
+            }
     },
     {
 
-      name: 'Aussentemperatur',
+      name: 'Outside temperature',
       data:  Aussentemperatur,
+      yAxis: 1,
       id:'Aussentemperatur',
-      visible: true
+      tooltip: {
+                valueSuffix: ' °C'
+            }
     },
     {
 
-      name: 'Volumenstrom',
+      name: 'Volumetric flow rate',
       data: Volumenstrom,
+      yAxis: 2,
       id: 'Volumenstrom',
-      visible: true
+      tooltip: {
+                valueSuffix: ' m³/s'
+            }
     },
     {
 
-      name: 'Vorlauftemperatur',
+      name: 'Input temperature',
       data:  Vorlauftemperatur,
+      yAxis: 1,
       id:'Vorlauftemperatur',
-      visible: true
+      tooltip: {
+                valueSuffix: ' °C'
+            }
       },
     {
-      name: 'Ruecklauftemperatur',
+      name: 'Output temperature',
       data:  Ruecklauftemperatur,
+      yAxis: 1,
       id:'Ruecklauftemperatur',
-      visible: true
+      tooltip: {
+                valueSuffix: ' °C'
+            }
     },
     {
 
-      name: 'Niederschlag',
+      name: 'Precipitation',
       data:  Niederschlag,
+      yAxis: 5,
       id:'Niederschlag',
-      visible: true
-    }
-    ]
+      tooltip: {
+                valueSuffix: ' l/m²'
+            }
+    },]
   });
 
 
