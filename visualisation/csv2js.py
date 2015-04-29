@@ -14,7 +14,7 @@ import sys
 ds = []
 
 #IMPORT FILE
-input_file = csv.DictReader(open("../data/ds1_weather.csv"), delimiter=';',)
+input_file = csv.DictReader(open("data/ds1_weather.csv"), delimiter=';',)
 for row in input_file:
 
     d = {}
@@ -58,8 +58,8 @@ for row in input_file:
             elif key == 'Aussentemperatur':
                 d[key] = float(row['Aussentemperatur'])
 
-            elif key == 'Relative_Feuchte':
-                d[key] = int(row['Relative_Feuchte'])
+            elif key == 'Relative Feuchte':
+                d[key] = int(row['Relative Feuchte'])
 
             elif key == 'Niederschlag':
                 d[key] = float(row['Niederschlag'])
@@ -82,7 +82,7 @@ for d in ds:
             listedd[key].append([d['Date'], d[key]])
 
 for key in listedd:
-    sys.stdout.write("var " + key +"=")
+    sys.stdout.write("var " + "".join(key.split()) +"=")
     sys.stdout.write("[")
 
     for idx, entry in enumerate(listedd[key]):

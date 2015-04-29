@@ -6,6 +6,9 @@ import csv
 import numpy as np
 from datetime import datetime
 
+import sys
+
+
 
 #target data structure
 ds = []
@@ -65,4 +68,6 @@ for row in input_file:
                 print 'ERROR: Key ' + key + 'not known'
 
     ds.append(d)
-print len(ds)
+# print len(ds)
+
+#Do your stuff
