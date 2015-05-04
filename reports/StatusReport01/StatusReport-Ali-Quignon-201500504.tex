@@ -12,7 +12,7 @@
 \usepackage{color}
 %\usepackage{csvsimple}
 \usepackage{float}
-\usepackage[T1]{fontenc}
+%\usepackage[T1]{fontenc}
 
 
 
@@ -66,58 +66,70 @@
 
 \begin{abstract}
 The abstract goes here
+%TODO
 \end{abstract}
 
 
 \section{Project introduction}
 %Include an introduction section to your project
 
-%Subject
-%Method
-%justification
+Heat pumps are a sustainable way to transfer thermal energy into out away from builds to keep a comfortable temperature. But to operate a heating pump is not a trivial task, different building distribute the heat differently and weather with its chaotic nature has a major influence on the temperature flow. In addition, they suffer from a suboptimal efficiency because they often have a bad time delay from sensing to acting. This could be counteracted by predicting future temperatures to overact sensors. efficiency could be increased by predicting energy consumption and delay that to times where energy is cheap. 
+Thus we want to predict the behaviour or an energy pump with respect to the weather.
+
 
 \section{Features}
 % Include information on which features are available from your data, and include visualizations
+For timeseries prediction, the features naturally come with the data. On our case, we have the power and energy (Figure \ref{fig:powerenergy}), the volumetric flow rate (Figure\ref{fig:volumetric_flow}), three temperatures (Figure \ref{fig:temperatures} and the relative air huminidty and precipitation as in Figure \ref{fig:humidity}.\\
+Of those, the outside temperature, the air humidity and the percipitation is the systems input, the input and output temperature and the volumetric flow rate can be thought of as the state of the machine and the energy and power is the output, which we want to predict.\\
+This separation however is not as static as presented, and the input temperature can also be thought of as an input, while the volumetric flow rate could also be output.\\
+It is also notable that some the values are more closely related then others. The outside temperature naturally tends to drop while it is raining, and the input and output temperature are often substracted to get an easy overview of the system temperature modulation. And the power and energy often highly correlate. Figure\ref{fig:correlate} shows the correlation of the fatures from which we might decide to merge or drop certain features.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\linewidth]{img/corrmatrix.png}
+  \caption{Correlations of the features.}
+  \label{fig:correlate}
+\end{figure}
+
 
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\linewidth]{img/powerenergy.png}
-  %TODO add caption
-  \caption{}
-  %\label{fig:}
+  \caption{Data visualisation of the power and energy}
+  \label{fig:powerenergy}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\linewidth]{img/Volumetric_flow.png}
-  %TODO add caption
-  \caption{}
-  %\label{fig:}
+  \caption{Data visualisation of the volumetric flow rate.}
+  \label{fig:volumetric_flow}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\linewidth]{img/Temperatures.png}
-  %TODO add caption
-  \caption{}
-  %\label{fig:}
+  \caption{Data visualisation of the temperature outside, the temperature input and the temperature output.}
+  \label{fig:temperatures}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\linewidth]{img/humidity.png}
-  %TODO add caption
-  \caption{}
-  %\label{fig:}
+  \caption{Data visualisation of the relative air humidity and precipitation.}
+  \label{fig:humidity}
 \end{figure}
 
 
 \section{Method}
 %Include a section on what Machine Learning method you intend to use, and why you believe it will be suitable for your data.
+Right now, heatpumps are often controlled by hand. A set of predefined rules may set off an alarm to the operator who then can react. Those rule are often thresholds to single values that are either directly read from a sensor ar accumulated from different sensors. To ensure a smooth transition and a correct prediction behaviour, we want to model those rules as closely as possible. As a first transition step, the rules used for prediction can be set into the existing system for testing. The operator and the performance of the system with those rule than can give valuable information of the prediction performance.\\
+Decision trees closely assemble those simple rules, and have the advantage that the prediction output is human readable and can be checked by the oparator. To improve the precision of the decision tree, multiple randomly initiated decision trees are set up in a so called random forest. Those random forests average the outcome of all decision trees. Classically decision trees are used for classification, but they can be adapted for forecasting as shown in \cite{pant1990innocents}. For stock market prediction, their performance is comparable with Support Vector Machines and can be superior to Neural Networks as shown in \cite{kumar2006forecasting}. They however need finetuning and default setting are not garuantee for good prediction is shown in \cite{segal2004machine}
 
 \section{Conclusion} 
-%haha\cite{kumar2006forecasting}
+%TODO
+%http://blog.kaggle.com/2012/05/01/chucking-everything-into-a-random-forest-ben-hamner-on-winning-the-air-quality-prediction-hackathon/
 
 
 %BIBLIOGRPAHY?
@@ -125,10 +137,10 @@ The abstract goes here
 \bibliography{bib.bib}
 %\bibentry{}
 
-\begin{appendix}
-\section{}
+%\begin{appendix}
+%\section{}
 
-\end{appendix}
+%\end{appendix}
 
 
 %COPY AND PASTE FROM HERE

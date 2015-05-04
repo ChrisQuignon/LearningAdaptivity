@@ -19,7 +19,7 @@ def dsimport():
 
         for key in row.keys():
             row[key] = row[key].replace(',', '.') #german number conversion
-            #Data conersion
+            #Data conversion
             if row[key]:
                 #date
                 if key == 'Date':
@@ -70,6 +70,7 @@ def dsimport():
     return ds
 
 def stretch(ds):
+    """Projects all values into datasets where the value is notpresent"""
     r = []
     #find all first values
     keys = get_all_keys(ds)
@@ -98,6 +99,7 @@ def stretch(ds):
 
 
 def get_all_keys(ds):
+    """Returns all keys in a dataset"""
     keys = []
     for d in ds:
          for k in d.keys():
@@ -106,6 +108,7 @@ def get_all_keys(ds):
     return keys
 
 def as_matrix(ds):
+    """Returns the dataset as a matrix and the corresponding keys mapping the dataset to the matrix"""
 
     keys = get_all_keys(ds)
 
@@ -117,24 +120,27 @@ def as_matrix(ds):
 
     return npm, keys
 
-def extract_keys(ds, keys):
-    ds = ds
-    keys = get_all_keys(ds)
-
-    extracts = []
-    rest = ds
-
-    for i in range(len(keys)):
-        remove_idx = keys.index(keys[i])
-
-        extract = np.asarray(rest[:,training_idx])
-        rest = np.delete(rest, (training_idx), axis = 1)
-
-        extracts.append(extract)
-    return extracts, rest
+# not in use
+# def extract_keys(ds, keys):
+#     ds = ds
+#     keys = get_all_keys(ds)
+#
+#     extracts = []
+#     rest = ds
+#
+#     for i in range(len(keys)):
+#         remove_idx = keys.index(keys[i])
+#         print remove_idx
+#
+#         extract = np.asarray(rest[:,remove_idx])
+#         rest = np.delete(rest, (remove_idx), axis = 1)
+#
+#         extracts.append(extract)
+#     return extracts, rest
 
 #split into input and output
 def split(ds, output_keys):
+    """Splits off the keys from the given dataset"""
     outputs = []
     inputs = []
 
@@ -154,42 +160,113 @@ def split(ds, output_keys):
 
     return inputs, outputs
 
-
-#Do your stuff
-
 # #HELPERS
+def get_values_by_key(ds, key):
+    """Returns all values with the given key"""
+    return [d[key] for d in ds if key in d.keys()]
 
 
-# #houry data:
-# [d for d in ds if d['Date'].hour == 0]
+def in_timerange(ds, start, end):
+    """Returns all data within a given timeframe.s
+    Example calls:
+    in_timerange(ds, '01.07.2014 00:01:14', '12.07.2014 00:01:14')
+    in_timerange(ds, ds[0], ds[100])
+    in_timerange(ds, ds[0]['Date'], ds[100]['Date'])
+    """
+    if isinstance(start, str) and  isinstance(end, str):
+        start = datetime.strptime(start, '%d.%m.%Y %H:%M:%S')
+        end = datetime.strptime(end, '%d.%m.%Y %H:%M:%S')
 
-# #minutely data:
-# [d for d in ds if d['Date'].minute == 0]
+    if isinstance(start, dict) and isinstance(end, dict):
+        min_d = min(start['Date'], end['Date'])
+        max_d = max(start['Date'], end['Date'])
 
-# #only one key:
-# [d['Leistung'] for d in ds if 'Leistung' in d.keys()]
+    if isinstance(start, datetime) and isinstance(end, datetime):
+        min_d = min(start, end)
+        max_d = max(start, end)
 
-# #all data between two dates
-# min_d = datetime.strptime('01.07.2014 00:01:14', '%d.%m.%Y %H:%M:%S')
-# max_d = datetime.strptime('12.07.2014 00:01:14', '%d.%m.%Y %H:%M:%S')
-# [d for d in ds if min_d < d['Date'] < max_d]
+    return [d for d in ds if min_d < d['Date'] < max_d]
 
-# #next one hour of data
-# now = ds[0]['Date']
-# [d for d in ds if d['Date']-now < timedelta(hours=1)]
 
-# #sort by date
-# ds = sorted(ds, key = lambda x : x['Date'])
+def in_timedelta(ds, start, timedelta):
+    """Returns all data that is withing timedelta after the given delta
+    Example call: in_timedelta(ds, ds[0], timedelta(hours = 1))"""
+    start = start['Date']
+    return [d for d in ds if d['Date']-start < timedelta]
 
-# #min of key
-# min([d for d in ds if 'Leistung' in d.keys()], key= lambda x: x['Leistung'])
+def sort_by_key(ds, key):
+    """Returns the dataset sorted by a given key.
+    example call: sort_by_key(ds, 'Dates')"""
+    return sorted(ds, key = lambda x : x[key])
 
-# #chunk
-# from itertools import groupby
-# for year_k, year in groupby(ds, key = lambda x : x['Date'].year):
-#     #year = dataset per year
-#     for month_k, month in groupby(year, key = lambda x: x['Date'].month):
-#         #month = dataset per month
-#         for day_k, day in groupby(month, key = lambda x: x ['Date'].day):
-#             #day = dataset per day
-#             print day_k
+
+def min_of_key(ds, key):
+    """Returns the data with the minimal value in the Keyset
+    Example call: min_of_keys(ds, 'Leistung')"""
+    return min([d for d in ds if key in d.keys()], key= lambda x: x[key])
+
+
+def max_of_key(ds, key):
+    """Returns the data with the maxsimal value in the Keyset
+    Example call: max_of_keys(ds, 'Leistung')"""
+    return max([d for d in ds if key in d.keys()], key= lambda x: x[key])
+
+#CHUNKS
+def chunk_by_days(ds):
+    """Returns a a list of datasets where all values in a list are on the same day
+    Example call: chunk_by_days(ds)"""
+    from itertools import groupby
+
+    chunks = []
+    for year_k, year in groupby(ds, key = lambda x : x['Date'].year):
+        #year = dataset per year
+        for month_k, month in groupby(year, key = lambda x: x['Date'].month):
+            #month = dataset per month
+            for day_k, day in groupby(month, key = lambda x: x ['Date'].day):
+                #day = dataset per day
+                chunks.append([d for d in day])
+    return chunks
+
+
+def chunk_by_hour(ds):
+    """Returns a a list of datasets where all values in a list are in the same hour
+    Example call: chunk_by_hour(ds)"""
+    from itertools import groupby
+
+    chunks = []
+    for year_k, year in groupby(ds, key = lambda x : x['Date'].year):
+        #year = dataset per year
+        for month_k, month in groupby(year, key = lambda x: x['Date'].month):
+            #month = dataset per month
+            for day_k, day in groupby(month, key = lambda x: x ['Date'].day):
+                #day = dataset per day
+                for hour_k, hour in groupby(month, key = lambda x: x ['Date'].hour):
+                    #hour = dataset per hour
+                    chunks.append([d for d in hour])
+    return chunks
+
+
+
+def chunk_by_n_minutes(ds, n):
+    """Returns a a list of datasets where all values in a list are on the same n minutes
+    N has to be a fraction of 60
+    Example call: chunk_by_n_minutes(ds, 5)"""
+    from itertools import groupby
+
+    if not (60%n == 0):
+        print "ERROR, n (=", n, ") can only be a fraction of 60"
+        return []
+
+    chunks = []
+    for year_k, year in groupby(ds, key = lambda x : x['Date'].year):
+        #year = dataset per year
+        for month_k, month in groupby(year, key = lambda x: x['Date'].month):
+            #month = dataset per month
+            for day_k, day in groupby(month, key = lambda x: x ['Date'].day):
+                #day = dataset per day
+                for hour_k, hour in groupby(month, key = lambda x: x ['Date'].hour):
+                    #hour = dataset per hour
+                    for minute_k, minutes in groupby(month, key = lambda x: x ['Date'].minute/n):
+                        #minutes = dataset per n minutes
+                        chunks.append([d for d in minutes])
+    return chunks
