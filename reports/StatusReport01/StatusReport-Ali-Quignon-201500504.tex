@@ -130,7 +130,7 @@ Decision trees closely resemble those simple rules, and have the advantage that 
 \section{Conclusion} 
 %TODO
 %http://blog.kaggle.com/2012/05/01/chucking-everything-into-a-random-forest-ben-hamner-on-winning-the-air-quality-prediction-hackathon/
-Using correlation matrix some obvious conclusions can be made, for example: outside temperature is highly related to Inward temperature of the heat-pump so, can be considered as redundant information. Output temperature is highly related to outside temperature 
+Using correlation matrix some obvious conclusions can be made, for example: output temperature is highly related to Input temperature of the heat-pump so, can be considered as redundant information. Input temperature is highly related to outside temperature. Interestingly precipitation is least correlated with all the features but relative humidity was suspected to be highly dependent on precipitation. Similarly, the power and energy has a correlation coefficient is about 0.6 which we suspected to be higher. In power-energy graph we can see the power graph following the energy graph, it is suspected that in the beginning due to negative value of the power there are some adverse affects on correlation coefficient with energy. Input temperature, output temperature and outside temperature are following similar trend throughout. From the literature it was concluded that the decision tree forest is the most effective in time-series prediction against other more complex learning algorithms, conclusion against Echo State Networks(ESNs) is still to be done.
 
 
 %BIBLIOGRPAHY?
