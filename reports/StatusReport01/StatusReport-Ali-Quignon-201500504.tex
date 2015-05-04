@@ -66,7 +66,7 @@
 
 \begin{abstract}
 %TODO :review this!
-\textbf{Abstract:} This week we tried to analyse our heat-pump data which was collected using sensors over six months. We evaluated relationship between different features using correlation. Also, we visualized the features in single graph to verify the hypothesis of there relationship. In the method section there is a use case for heat-pump data usage and a short literature review about using decision tree forest in time-series data analysis.
+\textbf{Abstract:} This week we analysed our heat-pump data which was collected using sensors over six months. We evaluated the relationship between different features using correlation. Also, we visualized the features in a single graph to verify the hypothesis of their relationship. In the method section there is a use case for heat-pump data usage and a short literature review about the use of decision tree forest in time-series data analysis.
 \end{abstract}
 
 
@@ -82,12 +82,12 @@ Thus we want to predict the behaviour or an energy pump with respect to the weat
 For time-series prediction, the features naturally come with the data. On our case, we have the power and energy (Figure \ref{fig:powerenergy}), the volumetric flow rate (Figure\ref{fig:volumetric_flow}), three temperatures (Figure \ref{fig:temperatures} and the relative air humidity and precipitation as in Figure \ref{fig:humidity}.\\
 Of those, the outside temperature, the air humidity and the precipitation is the systems input, the input and output temperature and the volumetric flow rate can be thought of as the state of the machine and the energy and power is the output, which we want to predict.\\
 This separation however is not as static as presented, and the input temperature can also be thought of as an input, while the volumetric flow rate could also be output.\\
-It is also notable that some the values are more closely related then others. The outside temperature naturally tends to drop while it is raining, and the input and output temperature are often substracted to get an easy overview of the system temperature modulation. And the power and energy often highly correlate. Figure\ref{fig:correlate} shows the correlation of the fatures from which we might decide to merge or drop certain features.
+It is also notable that some the values are more closely related then others. The outside temperature naturally tends to drop while it is raining, and the input and output temperature are often substracted to get an easy overview of the system temperature modulation. And the power and energy often highly correlate. Figure\ref{fig:correlate} shows the correlation of the features from which we might decide to merge or drop certain features.\footnotetext{Energie = energy, Niederschlag = precipitation, Rücklauftemperatur = output temperature, Aussentemperatur = outside temperature, Relative Feuchte = relative air humidity, Leistung = power, Volumenstrom = volumetric flow rate, Vorlauftemperatur = input temperature}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.5\linewidth]{img/corrmatrix.png}
-  \caption{Correlations of the features.}
+  \caption[This is needed]{Correlations of the features.\footnotemark}
   \label{fig:correlate}
 \end{figure}
 
