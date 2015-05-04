@@ -65,8 +65,8 @@
 
 
 \begin{abstract}
-The abstract goes here
-%TODO
+%TODO :review this!
+\textbf{Abstract:} This week we tried to analyse our heat-pump data which was collected using sensors over six months. We evaluated relationship between different features using correlation. Also, we visualized the features in single graph to verify the hypothesis of there relationship. In the method section there is a use case for heat-pump data usage and a short literature review about using decision tree forest in time-series data analysis.
 \end{abstract}
 
 
@@ -79,8 +79,8 @@ Thus we want to predict the behaviour or an energy pump with respect to the weat
 
 \section{Features}
 % Include information on which features are available from your data, and include visualizations
-For timeseries prediction, the features naturally come with the data. On our case, we have the power and energy (Figure \ref{fig:powerenergy}), the volumetric flow rate (Figure\ref{fig:volumetric_flow}), three temperatures (Figure \ref{fig:temperatures} and the relative air huminidty and precipitation as in Figure \ref{fig:humidity}.\\
-Of those, the outside temperature, the air humidity and the percipitation is the systems input, the input and output temperature and the volumetric flow rate can be thought of as the state of the machine and the energy and power is the output, which we want to predict.\\
+For time-series prediction, the features naturally come with the data. On our case, we have the power and energy (Figure \ref{fig:powerenergy}), the volumetric flow rate (Figure\ref{fig:volumetric_flow}), three temperatures (Figure \ref{fig:temperatures} and the relative air humidity and precipitation as in Figure \ref{fig:humidity}.\\
+Of those, the outside temperature, the air humidity and the precipitation is the systems input, the input and output temperature and the volumetric flow rate can be thought of as the state of the machine and the energy and power is the output, which we want to predict.\\
 This separation however is not as static as presented, and the input temperature can also be thought of as an input, while the volumetric flow rate could also be output.\\
 It is also notable that some the values are more closely related then others. The outside temperature naturally tends to drop while it is raining, and the input and output temperature are often substracted to get an easy overview of the system temperature modulation. And the power and energy often highly correlate. Figure\ref{fig:correlate} shows the correlation of the fatures from which we might decide to merge or drop certain features.
 
@@ -124,8 +124,8 @@ It is also notable that some the values are more closely related then others. Th
 
 \section{Method}
 %Include a section on what Machine Learning method you intend to use, and why you believe it will be suitable for your data.
-Right now, heatpumps are often controlled by hand. A set of predefined rules may set off an alarm to the operator who then can react. Those rule are often thresholds to single values that are either directly read from a sensor ar accumulated from different sensors. To ensure a smooth transition and a correct prediction behaviour, we want to model those rules as closely as possible. As a first transition step, the rules used for prediction can be set into the existing system for testing. The operator and the performance of the system with those rule than can give valuable information of the prediction performance.\\
-Decision trees closely assemble those simple rules, and have the advantage that the prediction output is human readable and can be checked by the oparator. To improve the precision of the decision tree, multiple randomly initiated decision trees are set up in a so called random forest. Those random forests average the outcome of all decision trees. Classically decision trees are used for classification, but they can be adapted for forecasting as shown in \cite{pant1990innocents}. For stock market prediction, their performance is comparable with Support Vector Machines and can be superior to Neural Networks as shown in \cite{kumar2006forecasting}. They however need finetuning and default setting are not garuantee for good prediction is shown in \cite{segal2004machine}
+Right now, heat-pumps are often controlled by hand. A set of predefined rules may set off an alarm to the operator who then can react. These rule are often thresholds, that is either directly read from a sensor or collected from different sensors. To ensure a smooth transition and a correct prediction behaviour, we want to model those rules as accurate as possible. As a first transition step, the rules used for prediction can be set into the existing system for testing. The operator and the performance of the system with those rules can give valuable information for a good prediction performance.\\
+Decision trees closely resemble those simple rules, and have the advantage that the prediction output is human readable and can be checked by the operator. To improve the precision of the decision tree, multiple randomly initiated decision trees are set up in a random forest. Those random forests average the outcome of all decision trees. Classically, decision trees are used for classification, but they can be adapted for forecasting as shown in \cite{pant1990innocents}. For stock market prediction, their performance is comparable with Support Vector Machines and can be superior to Neural Networks as shown in \cite{kumar2006forecasting}. However, they need fine-tuning and also default settings do not guarantee good prediction as shown in \cite{segal2004machine}
 
 \section{Conclusion} 
 %TODO
