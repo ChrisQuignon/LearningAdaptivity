@@ -12,40 +12,40 @@ ds = helper.dsimport()
 
 ds = helper.stretch(ds)
 
-days = helper.chunk_by_month(ds)
+months = helper.chunk_by_month(ds)
 
 
 #remove dates
-days = map(lambda x: helper.split(x, ['Date'])[0], days)
+months = map(lambda x: helper.split(x, ['Date'])[0], months)
 
 
-keys = helper.get_all_keys(days[0])
+keys = helper.get_all_keys(months[0])
 
-#daymatrix = map (lambda x : helper.as_matrix(x)[0], days)
+#monthmatrix = map (lambda x : helper.as_matrix(x)[0], months)
 
 #create list with dummy zeros for easy appending
-values_by_days = []
+values_by_months = []
 for _ in range(8):#number of keys
-    values_by_days.append([0])
+    values_by_months.append([0])
 
-for i, day in enumerate(days):
-    day_data, _ = helper.as_matrix(day)
-    day_data = day_data.T
-    for idx, day_val in enumerate(day_data):
-        values_by_days[idx].append([day_val])
+for i, month in enumerate(months):
+    month_data, _ = helper.as_matrix(month)
+    month_data = month_data.T
+    for idx, month_val in enumerate(month_data):
+        values_by_months[idx].append([month_val])
 
 #remove dummy zeros
-for vals in values_by_days:
+for vals in values_by_months:
     vals.pop(0)
 
-# values_by_days:
-# 1st dim: values
-# 2nd dim: days
+# values_by_months:
+# 1st dim: features
+# 2nd dim: months
 # 3rd dim: values
 
 #substract mean
 normset = []
-for vals in values_by_days:
+for vals in values_by_months:
     normvals = []
     for s in vals:
 
@@ -55,7 +55,7 @@ for vals in values_by_days:
     normset.append(normvals)
 
 for i, vals in enumerate(normset):
-    # for day in vals:
+    # for month in vals:
     pylab.clf()
     pylab.title(keys[i])
 
