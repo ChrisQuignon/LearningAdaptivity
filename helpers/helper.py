@@ -116,7 +116,7 @@ def as_matrix(ds):
     for d in ds:
         row = [d[key] for key in keys]
         m.append(row)
-    npm = np.asmatrix(m)
+    npm = np.asarray(m)
 
     return npm, keys
 
@@ -212,8 +212,23 @@ def max_of_key(ds, key):
     return max([d for d in ds if key in d.keys()], key= lambda x: x[key])
 
 #CHUNKS
+
+def chunk_by_month(ds):
+    """Returns a list of datasets where all values in a list are on the same month
+    Example call: chunk_by_days(ds)"""
+    from itertools import groupby
+
+    chunks = []
+    for year_k, year in groupby(ds, key = lambda x : x['Date'].year):
+        #year = dataset per year
+        for month_k, month in groupby(year, key = lambda x: x['Date'].month):
+            #month = dataset per month
+            chunks.append([d for d in month])
+    return chunks
+
+
 def chunk_by_days(ds):
-    """Returns a a list of datasets where all values in a list are on the same day
+    """Returns a list of datasets where all values in a list are on the same day
     Example call: chunk_by_days(ds)"""
     from itertools import groupby
 
@@ -229,7 +244,7 @@ def chunk_by_days(ds):
 
 
 def chunk_by_hour(ds):
-    """Returns a a list of datasets where all values in a list are in the same hour
+    """Returns a list of datasets where all values in a list are in the same hour
     Example call: chunk_by_hour(ds)"""
     from itertools import groupby
 
