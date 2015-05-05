@@ -285,3 +285,56 @@ def chunk_by_n_minutes(ds, n):
                         #minutes = dataset per n minutes
                         chunks.append([d for d in minutes])
     return chunks
+
+#subsampling
+
+
+def subsample_hour(ds):
+    """Subsamples a given datatset ds with a mean per hour"""
+    samples = chunk_by_hour(ds)
+    keys = get_all_keys(samples[0])
+
+    s = []
+    for sample in samples:
+        d = {}
+        for key in keys:
+            if key == 'Date':
+                d[key] = min(get_values_by_key(sample, key))
+            else:
+                d[key] = np.mean(get_values_by_key(sample, key))
+        s.append(d)
+    return s
+
+
+def subsample_day(ds):
+    """Subsamples a given datatset ds with a mean per day"""
+    samples = chunk_by_day(ds)
+    keys = get_all_keys(samples[0])
+
+    s = []
+    for sample in samples:
+        d = {}
+        for key in keys:
+            if key == 'Date':
+                d[key] = min(get_values_by_key(sample, key))
+            else:
+                d[key] = np.mean(get_values_by_key(sample, key))
+        s.append(d)
+    return s
+
+
+def subsample_n_minutes(ds, n):
+    """Subsamples a given datatset ds with a mean per hour"""
+    samples = chunk_by_n_minutes(ds, n)
+    keys = get_all_keys(samples[0])
+
+    s = []
+    for sample in samples:
+        d = {}
+        for key in keys:
+            if key == 'Date':
+                d[key] = min(get_values_by_key(sample, key))
+            else:
+                d[key] = np.mean(get_values_by_key(sample, key))
+        s.append(d)
+    return s
