@@ -1,7 +1,6 @@
 from imp import load_source
-import numpy as np
 from random import randrange
-# import numpy as np
+import numpy as np
 import pylab
 
 #import dataset
@@ -63,11 +62,10 @@ for i, vals in enumerate(normset):
     pylab.boxplot(vals, sym='')
 
     pylab.ylabel('Mean substracted, normalized value')
-    month = range(6, 6+len(keys))
-    month = map (lambda x: x%12 + 1, month)
-
-    pylab.xticks(range(1, len(keys)+1), month)
+    month = range(6, 8+len(keys)+1)
+    month = map(lambda x: x%12 + 1, month)
+    pylab.xticks(range(1, 9), month)
     pylab.xlabel('Month')
     pylab.tight_layout()
-    pylab.savefig('../img/boxplot_' + keys[i] + '.png')
+    pylab.savefig('../img/boxplot-' + keys[i] + '.png')
     # pylab.show()
