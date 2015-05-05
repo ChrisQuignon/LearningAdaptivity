@@ -5,5 +5,8 @@
 4. cd helpers
 5. python ../random_trees/stabilisation.py
 
+6. cd ../random_trees
+7. python randomtree.py
+
 n. complain about complicated setup
 n+1. fix it ;-)
