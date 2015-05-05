@@ -14,11 +14,8 @@ ds = helper.dsimport()
 
 ds = helper.stretch(ds)
 
-#make it short
-ds = ds[0:1000]
-#TODO: make it long
-
-
+#subsampling
+ds = helper.subsample_days(ds)
 
 #pick training, test and validation data
 train_set = ds

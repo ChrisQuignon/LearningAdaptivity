@@ -18,7 +18,7 @@ def dsimport():
         d = {}
 
         for key in row.keys():
-            row[key] = row[key].replace(',', '.') #german number conversion
+            row[key] = row[key].replace(',', '.') #english number conversion
             #Data conversion
             if row[key]:
                 #date
@@ -243,7 +243,7 @@ def chunk_by_days(ds):
     return chunks
 
 
-def chunk_by_hour(ds):
+def chunk_by_hours(ds):
     """Returns a list of datasets where all values in a list are in the same hour
     Example call: chunk_by_hour(ds)"""
     from itertools import groupby
@@ -289,9 +289,9 @@ def chunk_by_n_minutes(ds, n):
 #subsampling
 
 
-def subsample_hour(ds):
+def subsample_hours(ds):
     """Subsamples a given datatset ds with a mean per hour"""
-    samples = chunk_by_hour(ds)
+    samples = chunk_by_hours(ds)
     keys = get_all_keys(samples[0])
 
     s = []
@@ -306,9 +306,9 @@ def subsample_hour(ds):
     return s
 
 
-def subsample_day(ds):
+def subsample_days(ds):
     """Subsamples a given datatset ds with a mean per day"""
-    samples = chunk_by_day(ds)
+    samples = chunk_by_days(ds)
     keys = get_all_keys(samples[0])
 
     s = []
@@ -338,3 +338,32 @@ def subsample_n_minutes(ds, n):
                 d[key] = np.mean(get_values_by_key(sample, key))
         s.append(d)
     return s
+
+
+def translate(word):
+    """Translates the given german feature name into english.
+    Also works for lists of german feature names"""
+    if isinstance(word, list):
+        return map(translate, word)
+
+    if word == 'Vorlauftemperatur':
+        return 'input temperature'
+    elif word == 'Volumenstrom':
+        return 'volumetric flowrate'
+    elif word == 'Ruecklauftemperatur':
+        return 'output temperature'
+    elif word == 'Aussentemperatur':
+        return 'outside temperature'
+    elif word == 'Leistung':
+        return 'power'
+    elif word =='Niederschlag' :
+        return 'precipitation'
+    elif word == 'Energie':
+        return 'energy'
+    elif word == 'Date':
+        return 'date'
+    elif word == 'Relative Feuchte':
+        return 'relative air humidity'
+    else:
+        print word, ' unkown!'
+        return

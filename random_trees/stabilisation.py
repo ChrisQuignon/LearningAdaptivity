@@ -12,7 +12,7 @@ ds = helper.dsimport()
 
 ds = helper.stretch(ds)
 
-months = helper.chunk_by_month(ds)
+months = helper.chunk_by_months(ds)
 
 
 #remove dates
@@ -57,7 +57,7 @@ for vals in values_by_months:
 for i, vals in enumerate(normset):
     # for month in vals:
     pylab.clf()
-    pylab.title(keys[i])
+    pylab.title(helper.translate(keys[i]))
 
     pylab.boxplot(vals, sym='')
 
@@ -67,5 +67,5 @@ for i, vals in enumerate(normset):
     pylab.xticks(range(1, 9), month)
     pylab.xlabel('Month')
     pylab.tight_layout()
-    pylab.savefig('../img/boxplot-' + keys[i] + '.png')
+    pylab.savefig('../img/boxplot-' + helper.translate(keys[i]) + '.png')
     # pylab.show()
