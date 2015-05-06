@@ -346,24 +346,20 @@ def translate(word):
     if isinstance(word, list):
         return map(translate, word)
 
-    if word == 'Vorlauftemperatur':
-        return 'input temperature'
-    elif word == 'Volumenstrom':
-        return 'volumetric flowrate'
-    elif word == 'Ruecklauftemperatur':
-        return 'output temperature'
-    elif word == 'Aussentemperatur':
-        return 'outside temperature'
-    elif word == 'Leistung':
-        return 'power'
-    elif word =='Niederschlag' :
-        return 'precipitation'
-    elif word == 'Energie':
-        return 'energy'
-    elif word == 'Date':
-        return 'date'
-    elif word == 'Relative Feuchte':
-        return 'relative air humidity'
+    dict = {
+    'Vorlauftemperatur':'input temperature',
+    'Volumenstrom':'volumetric flowrate',
+    'Ruecklauftemperatur':'output temperature',
+    'Aussentemperatur':'outside temperature',
+    'Leistung':'power',
+    'Niederschlag' :'precipitation',
+    'Energie':'energy',
+    'Date':'date',
+    'Relative Feuchte':'relative air humidity'
+    }
+
+    if word in dict.keys():
+        return dict[word]
     else:
         print word, ' unkown!'
         return
