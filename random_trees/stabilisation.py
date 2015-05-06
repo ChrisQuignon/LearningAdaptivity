@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from imp import load_source
 from random import randrange
 import numpy as np

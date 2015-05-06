@@ -345,6 +345,8 @@ def translate(word):
     Also works for lists of german feature names"""
     if isinstance(word, list):
         return map(translate, word)
+    if isinstance(word, np.ndarray):
+        return translate(word.tolist())
 
     dict = {
     'Vorlauftemperatur':'input temperature',

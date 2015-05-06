@@ -57,6 +57,8 @@ test_set, _ = helper.as_matrix(test_set)
 
 
 #train forest
+#TODO: This is nonesense, because the value to predict is inside the input value
+#TODO: shift values to predict
 forest = RandomForestRegressor(n_estimators = 100)
 forest = forest.fit(train_set, train_out)
 output = forest.predict(test_set)
@@ -69,7 +71,7 @@ for i in range(output.shape[1]):
     pylab.plot(test_out[:, i], color = 'red')
 
     pylab.tight_layout()
-    pylab.savefig('../img/prediction-' + str(int(test_percentage/hour))+ helper.translate(output_keys[i]) + '.png')
+    pylab.savefig('../img/regression-' + str(int(test_percentage/hour))+ helper.translate(output_keys[i]) + '.png')
     # pylab.show()
 
 print forest.score(test_set, test_out)
