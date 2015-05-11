@@ -7,7 +7,7 @@ import pylab
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error,r2_score,mean_absolute_error
 #import dataset
 #equivalent to:
 #import ../helpers/csvimport as helper
@@ -51,6 +51,8 @@ forest = RandomForestRegressor(n_estimators = 100,n_jobs=100)
 forest = forest.fit(training_ip, training_op.ravel())
 
 MSE_list=[0];
+R2_list = [];
+mean_absolute_error_list = [];
 test_start = df.index.searchsorted(datetime(2014, 12, 1,0,1));
 hours_limit = 100
 for step in range(1,hours_limit+1):
@@ -67,16 +69,20 @@ for step in range(1,hours_limit+1):
 	test_predictions = forest.predict(test_ip);
 
 	MSE = mean_squared_error(test_actual, test_predictions)**0.5;
-	print("Mean Squared Error: %.2f"%(MSE));
+	R2 = r2_score(test_actual, test_predictions);
+	mae = mean_absolute_error(test_actual, test_predictions)
+	print("Mean Absolute Error : %.2f"%(mae));
 	MSE_list.append(MSE);
+	R2_list.append(R2);
+	mean_absolute_error_list.append(mae);
 
-
-pylab.plot(MSE_list)
-pylab.title("Mean Squared Error of predictions after time delta")
+print mean_absolute_error_list
+pylab.plot(mean_absolute_error_list)
+pylab.title("Mean Absolute Error of predictions after time delta")
 pylab.xlabel("time delta += 1 hour")
-pylab.ylabel("RMSE")
+pylab.ylabel("MAE")
 ax = pylab.gca()
-ax.set_xticks(np.arange(0,101,5))
-ax.set_yticks(np.arange(0,91,5))
+ax.set_xticks(np.arange(0,100,5))
+# ax.set_yticks(np.arange(0,91,5))
 plt.grid()
 pylab.show()
