@@ -1,0 +1,6 @@
+#latex ignore
+*.log
+*.aux
+*.pdf
+*.synctex.gz
+*.out
