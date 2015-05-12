@@ -44,6 +44,7 @@ print("training on %.2f percent data"%(train_per))
 to_be_predicted = ['Energie'];
 to_be_input = ["Aussentemperatur","Niederschlag","Relative Feuchte","Ruecklauftemperatur",
 			   "Volumenstrom" , "Vorlauftemperatur"]
+#BUG: This is wrong, you do not predict future values but other features at the same time.
 training_ip = train_data.loc[:,to_be_input].values;
 training_op = train_data.loc[:,to_be_predicted].values;
 

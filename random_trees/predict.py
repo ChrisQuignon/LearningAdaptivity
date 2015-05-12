@@ -22,6 +22,9 @@ df = pd.DataFrame(ds)
 df.set_index(df.Date, inplace=True)
 df.fillna(inplace=True, method='ffill')#we at first forwardfill
 df.fillna(inplace=True, method='bfill')#then do a backwards fill
+df.interpolate(inplace=True)
+# np.any(np.isnan(df.as_matrix()))
+
 df = df.resample('2Min')
 
 

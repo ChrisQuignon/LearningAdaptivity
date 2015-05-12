@@ -44,6 +44,7 @@ print("training on %.2f percent data"%(train_per))
 to_be_predicted = ['Energie'];
 to_be_input = ["Aussentemperatur","Niederschlag","Relative Feuchte","Ruecklauftemperatur",
 			   "Volumenstrom" , "Vorlauftemperatur"]
+#BUG: This is wrong, you do not predict future values but other features at the same time.
 training_ip = train_data.loc[:,to_be_input].values;
 training_op = train_data.loc[:,to_be_predicted].values;
 
@@ -65,6 +66,13 @@ for step in range(1,daily_limit+1):
 	test_actual = test_data.loc[:,to_be_predicted].values;
 
 	test_predictions = forest.predict(test_ip);
+
+	# pylab.plot(test_ip)
+	# pylab.show()
+	#
+	# pylab.plot(test_actual)
+	# pylab.plot(test_predictions)
+	# pylab.show()
 
 	MSE = mean_squared_error(test_actual, test_predictions)**0.5;
 	print("Mean Squared Error: %.2f"%(MSE));
