@@ -24,7 +24,7 @@ cm = cm.as_matrix()
 key_order = asarray(['Aussentemperatur','Energie','Leistung','Niederschlag','Relative Feuchte','Ruecklauftemperatur','Volumenstrom','Vorlauftemperatur'])
 
 # #REORDER
-sortkey = asarray([7, 5, 0, 3, 4, 1, 2, 6])
+sortkey = asarray([7, 5, 0, 3, 4, 6, 2, 1])
 
 cm = cm[sortkey]
 for i,  row in enumerate(cm):
