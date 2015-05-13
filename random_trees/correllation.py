@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
 from imp import load_source
-from numpy import corrcoef, sum, log, arange
+from numpy import corrcoef, sum, log, arange, asarray
 from random import randrange
-# import numpy as np
 from pylab import pcolor, show, colorbar, xticks, yticks, tight_layout
 import pandas as pd
 
@@ -21,27 +20,23 @@ df.set_index(df.Date, inplace=True)
 
 
 cm = df.corr()
+cm = cm.as_matrix()
+key_order = asarray(['Aussentemperatur','Energie','Leistung','Niederschlag','Relative Feuchte','Ruecklauftemperatur','Volumenstrom','Vorlauftemperatur'])
 
+# #REORDER
+sortkey = asarray([7, 5, 0, 3, 4, 6, 2, 1])
 
-# #RESORT
-# key_order = ['Aussentemperatur', 'Niederschlag', 'Relative Feuchte', 'Ruecklauftemperatur', 'Volumenstrom', 'Vorlauftemperatur', 'Energie', 'Leistung']
-#
-# sortkey = np.asarray([0, 1, 3, 5, 7, 2, 4, 6])
-# cm = cm.as_matrix()
-#
-# cm = cm[sortkey]
-#
-# for row in cm:
-#     row = row[sortkey]
-#
-# print cm
+cm = cm[sortkey]
+for i,  row in enumerate(cm):
+    cm[i] = row[sortkey]
 
-
-
+# #VISUALISATION
 pcolor(cm)
 colorbar()
 
-yticks(arange(0.5,8.5),helper.translate(cm.columns.values), rotation='horizontal')
-xticks(arange(0.5,8.5),helper.translate(cm.columns.values), rotation='vertical')
+lable = helper.translate(key_order[sortkey])
+
+yticks(arange(0.5,8.5),lable, rotation='horizontal')
+xticks(arange(0.5,8.5),lable, rotation='vertical')
 tight_layout()
 show()
