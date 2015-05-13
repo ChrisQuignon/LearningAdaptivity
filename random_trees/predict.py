@@ -18,14 +18,6 @@ ds = helper.dsimport()
 
 # ds = helper.stretch(ds)
 
-# df = pd.DataFrame(ds)
-# df.set_index(df.Date, inplace = True)
-# df.interpolate(inplace=True)
-# df = df.resample('5Min')
-# df.fillna(inplace=True, method='ffill')#we at first forwardfill
-# df.fillna(inplace=True, method='bfill')#then do a backwards fill
-# # np.any(np.isnan(df.as_matrix()))
-
 df = pd.DataFrame(ds)
 df.set_index(df.Date, inplace = True)
 df.interpolate(inplace=True)
@@ -101,7 +93,6 @@ input = np.asarray(input)#TODO check whether this is possible
 output = np.asarray(output)
 
 print 'start learning', datetime.now()
-#TODO:
 forest = RandomForestRegressor(n_estimators = 100)
 forest = forest.fit(input, output)
 
@@ -118,7 +109,6 @@ for k in validation_out.keys():
 
 validation_in = validation_in.as_matrix().flatten()
 validation_out = validation_out.as_matrix().flatten()
-#TODO: debug
 predicted_output = forest.predict(validation_in)
 
 validation_out = np.reshape(validation_out, out_shape)
@@ -131,6 +121,11 @@ print 'prediction:'
 print predicted_output.T
 # print ''
 # print forest.score([validation_in], [validation_out])
+
+#TODO:
+#systematic evaluation
+#Find optimal shift
+
 
 pylab.plot(validation_out[:,0], color = "green", linestyle = '-')
 pylab.plot(validation_out[:,1], color = "blue", linestyle = '-')

@@ -8,6 +8,7 @@
 6. cd ../random_trees
 7. python randomtree.py
 8. python seasonal_decomposition.py
+9. python timeshift_correlation.py
 
 n. complain about complicated setup
 
