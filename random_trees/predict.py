@@ -26,32 +26,39 @@ df.fillna(inplace=True, method='ffill')#we at first forwardfill
 df.fillna(inplace=True, method='bfill')#then do a backwards fill
 
 
-max_idx = df.index[-1] - timedelta(hours = 9)
+def slice(ds, timedelta_input, timedelta_output, to_predict, freq=1):
+    """
+    Slices a dataframe into inputs and putputframes and ruturns them along with their shape.
+    """
 
-def random_frameset(ds, timedelta_input, timedelta_output, to_predict):
-    """Returns an input and an adjacent output frame with a given size
-    example call:
-    timedelta_input = timedelta(hours = 3)
-    timedelta_output =  timedelta(hours = 1)
-    to_predict = ['Energie', 'Leistung']
-    in_frame, out_frame = random_frameset(ds, timedelta_input, timedelta_output, to_predict)"""
+    inputs = []
+    outputs = []
+    input_shape= []
+    output_shape = []
 
-    max_time = df.index[-1] - timedelta_input - timedelta_output
-    max_r = df[:max_time].shape[0]
-    r = int(random() * max_r)
+    last_time = ds.index[-2] - (timedelta_input + timedelta_output)
 
-    start = df.index[r]
-    now = start + timedelta_input
-    prediction_goal = now+timedelta_output
+    print last_time
 
-    input_frame = df[start:(start+timedelta_input)]
-    output_frame = df[now:prediction_goal]
+    for idx in range(0, ds.index.shape[0], freq):
+        start_input_frame = ds.index[idx]
+        end_input_frame = start_input_frame + timedelta_input
+        end_output_frame = end_input_frame+timedelta_output
 
-    for k in output_frame.keys():
-        if k not in to_predict:
-            del output_frame[k]
+        input_frame = df[start_input_frame:end_input_frame]
+        output_frame = df[end_input_frame:end_output_frame]
 
-    return input_frame, output_frame
+        for k in output_frame.keys():
+            if k not in to_predict:
+                del output_frame[k]
+
+        inputs.append(input_frame.as_matrix().flatten())
+        outputs.append(output_frame.as_matrix().flatten())
+
+        input_shape = input_frame.shape
+        output_shape = output_frame.shape
+
+    return ((np.vstack(inputs), input_shape), (np.vstack(outputs), output_shape))
 
 
 
@@ -61,40 +68,21 @@ timedelta_input = timedelta(hours = 3)
 timedelta_output =  timedelta(hours = 1)
 to_predict = ['Energie', 'Leistung']
 
-end = df.index[-1]
-last = end - timedelta_input - timedelta_output
+last = df.index[-1] - timedelta_input - timedelta_output
 
 #cutting off the last 4 hours is probably too little to predcit
 train_frame = df[:last]
 validation_frame = df[last:]
 
-
 #sampling the "function"
-input = []
-output = []
-in_shape = []
-out_shape = []
-for _ in range(5000):
-    in_frame, out_frame = random_frameset(train_frame, timedelta_input, timedelta_output, to_predict)
+(inputs, input_shape), (outputs, output_shape) = slice(train_frame, timedelta_input, timedelta_output, to_predict, 10)
 
-    in_shape = in_frame.shape
-    out_shape = out_frame.shape
-
-    in_matrix = in_frame.as_matrix().flatten()
-    out_matrix = out_frame.as_matrix().flatten()
-    #TODO: check for nan values here
-    if not np.any(np.isnan(in_matrix)) and not np.any(np.isnan(out_matrix)):
-
-        input.append(in_matrix)
-        output.append(out_matrix)
-        print "dopping frame"
-
-input = np.asarray(input)#TODO check whether this is possible
-output = np.asarray(output)
+inputs = np.asarray(inputs)
+outputs = np.asarray(outputs)
 
 print 'start learning', datetime.now()
-forest = RandomForestRegressor(n_estimators = 100)
-forest = forest.fit(input, output)
+forest = RandomForestRegressor(n_estimators = 10)
+forest = forest.fit(inputs, outputs)
 
 print 'stopped learning at ', datetime.now()
 
@@ -111,8 +99,8 @@ validation_in = validation_in.as_matrix().flatten()
 validation_out = validation_out.as_matrix().flatten()
 predicted_output = forest.predict(validation_in)
 
-validation_out = np.reshape(validation_out, out_shape)
-predicted_output = np.reshape(predicted_output, out_shape)
+validation_out = np.reshape(validation_out, output_shape)
+predicted_output = np.reshape(predicted_output, output_shape)
 
 print 'validation:'
 print validation_out.T
@@ -123,7 +111,6 @@ print predicted_output.T
 # print forest.score([validation_in], [validation_out])
 
 #TODO:
-#systematic evaluation
 #Find optimal shift
 
 
