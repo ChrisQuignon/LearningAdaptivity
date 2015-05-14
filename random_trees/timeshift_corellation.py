@@ -71,7 +71,8 @@ for i,  row in enumerate(cm):
     cm[i] = row[sortkey]
 
 pcolor(sf, cmap='RdBu')
-colorbar(label = 'shift in minutes')
+cbar = colorbar()
+cbar.set_label( 'shift in minutes')
 
 lable = helper.translate(key_order[sortkey])
 

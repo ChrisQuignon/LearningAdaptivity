@@ -3,7 +3,7 @@
 from imp import load_source
 from numpy import corrcoef, sum, log, arange, asarray
 from random import randrange
-from pylab import pcolor, show, colorbar, xticks, yticks, tight_layout
+from pylab import pcolor, show, colorbar, xticks, yticks, tight_layout, plot, clf, title, xlim, savefig
 import pandas as pd
 
 #import dataset
@@ -31,12 +31,15 @@ for i,  row in enumerate(cm):
     cm[i] = row[sortkey]
 
 # #VISUALISATION
-pcolor(cm)
-colorbar()
+
+pcolor(cm, cmap='RdBu')
+cbar = colorbar()
 
 lable = helper.translate(key_order[sortkey])
 
 yticks(arange(0.5,8.5),lable, rotation='horizontal')
 xticks(arange(0.5,8.5),lable, rotation='vertical')
-tight_layout()
-show()
+# tight_layout()
+savefig('../img/correlation.png')
+# show()
+clf()
