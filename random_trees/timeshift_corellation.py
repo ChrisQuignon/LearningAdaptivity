@@ -3,7 +3,7 @@
 from imp import load_source
 from numpy import corrcoef, sum, log, arange, asarray, convolve, argmax, roll
 from random import randrange
-from pylab import pcolor, show, colorbar, xticks, yticks, tight_layout, plot, clf, title, xlim, savefig
+from pylab import pcolor, show, colorbar, xticks, yticks, tight_layout, plot, clf, title, xlim, savefig, legend
 import pandas as pd
 import statsmodels.api as sm #needs R installed
 from scipy.signal import correlate
@@ -18,7 +18,7 @@ ds = helper.dsimport()
 #IMPORT
 df = pd.DataFrame(ds)
 df.set_index(df.Date, inplace = True)
-df.interpolate(inplace=True)
+df = df.interpolate()
 df = df.resample('1Min')
 df.fillna(inplace=True, method='ffill')#we at first forwardfill
 df.fillna(inplace=True, method='bfill')#then do a backwards fill
@@ -50,7 +50,9 @@ for first in dayseasons.keys():
         plot(c/max(c), color = "red")
         plot(dayseasons[first]/max(dayseasons[first]), color = "blue")
         plot(dayseasons[second]/max(dayseasons[second]), color = "green")
+        legend(["Correlation",helper.translate(first), helper.translate(second)]);
         xlim(0, c.shape[0])
+
         savefig('../img/timeshift-' + helper.translate(first) + '-' + helper.translate(second) + '.png')
         # show()
         clf()
