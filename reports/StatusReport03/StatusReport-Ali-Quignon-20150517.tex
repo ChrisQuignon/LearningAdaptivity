@@ -93,12 +93,12 @@ Remarkably those three groups have a meaning in the system. The first group cont
 As suggested in \cite{vafaeipour2014application} the sliding window approach was used to learn how to predict. In this approach the time series is split into windows or frames of input and output. Unlike in regression learning, those windows are shifted. Thus the learning algorithm does not learn the relation of the features at the same time, but their relation in the future. With this approach, it is possible to include all features as an input and select few of them as an output. This can be enhanced further by including predictable features into the input. These three methods are depicted in Figure \ref{fig:slidingwindow}.\\
 The random forest implementation we are using however can not handle input with more than one dimension. Thus we flatten the input to one dimension. Since the feature values are typically easily separable, we expect the random forest to recognize this flattening in an early step. We do not include this as an extra information into the trees.
 
-%\begin{figure}[H]
-%  \centering
-%  \includegraphics[width=0.5\linewidth]{../img/	}
-%  %\caption{}
-%  %\label{fig:slidingwindow}
-%\end{figure}
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=0.5\linewidth]{img/regpred.png}
+  \caption{Input(green) and output(red) frames for regression(left), prediction(middle) and enhanced prediction(right).}
+  \label{fig:slidingwindow}
+\end{figure}
 %PUT UNITS ON THE FIGURES
 
 \section{Seasonal decomposition}

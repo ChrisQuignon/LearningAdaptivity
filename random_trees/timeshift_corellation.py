@@ -42,7 +42,7 @@ for first in dayseasons.keys():
 
         #find abs max
         c = c/max(abs(c))
-        shift = c.shape[0]/2 - argmax(c)
+        shift = (c.shape[0]/2 - argmax(c))/2
 
         shifts[first][second] = shift
 
@@ -51,6 +51,7 @@ for first in dayseasons.keys():
         plot(dayseasons[first]/max(dayseasons[first]), color = "blue")
         plot(dayseasons[second]/max(dayseasons[second]), color = "green")
         xlim(0, c.shape[0])
+        tight_layout()
         savefig('../img/timeshift-' + helper.translate(first) + '-' + helper.translate(second) + '.png')
         # show()
         clf()
