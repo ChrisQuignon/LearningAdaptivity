@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 from imp import load_source
 from random import randrange, random
@@ -22,13 +22,13 @@ ds = helper.dsimport()
 
 # ds = helper.stretch(ds)
 
-df = pd.DataFrame(ds)
-df.set_index(df.Date, inplace = True)
-df.interpolate(inplace=True)
+df=pd.DataFrame(ds)
+df.set_index(df.Date, inplace=True)
+# df.interpolate(inplace=True)
 df = df.resample('2Min')
 df.fillna(inplace=True, method='ffill')#we at first forwardfill
 df.fillna(inplace=True, method='bfill')#then do a backwards fill
-# np.any(np.isnan(df.as_matrix()))
+print(np.any(np.isnan(df.as_matrix())))
 
 
 week = 30*24*7#Weekly season for two minutes
