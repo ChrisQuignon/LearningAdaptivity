@@ -52,7 +52,11 @@ for first in dayseasons.keys():
         plot(dayseasons[second]/max(dayseasons[second]), color = "green")
         legend(["Correlation",helper.translate(first), helper.translate(second)]);
         xlim(0, c.shape[0])
+<<<<<<< HEAD
+
+=======
         tight_layout()
+>>>>>>> 4a4a310835570d44a8c3a0aea55be80a5ca25b81
         savefig('../img/timeshift-' + helper.translate(first) + '-' + helper.translate(second) + '.png')
         # show()
         clf()
