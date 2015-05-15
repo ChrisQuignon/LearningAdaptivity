@@ -73,11 +73,16 @@ def slice(ds, timedelta_input, timedelta_output, to_predict, freq=1):
 #Define input and output frames
 timedelta_input = timedelta(hours = 3)
 timedelta_output =  timedelta(hours = 3)
-to_predict = ['Energie']
+to_predict = ['Energie', "Leistung"]
+
+print 'Learning:'
+print 'Input frame: ', timedelta_input
+print 'Output frame: ', timedelta_output
+print 'Features learned: ', helper.translate(to_predict)
 
 #cutting off the validation frame
 last = df.index[-1] - timedelta_input - timedelta_output
-last = df.index[-1] - timedelta(days = 7)
+last = df.index[-1] - timedelta(days = 14)
 
 train_frame = df[:last]
 validation_frame = df[last:]
@@ -98,10 +103,10 @@ print 'stopped learning at ', datetime.now()
 
 predicted_output = forest.predict(val_in)
 
-
 #reshape rows according to output_shape
 validation_out = np.reshape(val_out, (val_out.shape[0], output_shape[0], output_shape[1]))
 predicted_output = np.reshape(predicted_output, (predicted_output.shape[0], output_shape[0], output_shape[1]))
+score = forest.score(val_in, val_out)
 
 print 'validation:'
 print validation_out.T
@@ -110,11 +115,22 @@ print 'prediction:'
 print predicted_output.T
 print ''
 print 'score:'
-print forest.score(val_in, val_out)
+print score
 
+#split values
+val_features = np.dsplit(validation_out, validation_out.shape[2])
+pred_features = np.dsplit(predicted_output, predicted_output.shape[2])
 
-pylab.plot(validation_out[:,0], color = "green", linestyle = '-')
-pylab.plot(validation_out[:,1], color = "blue", linestyle = '-')
-pylab.plot(predicted_output[:,0], color = "green", linestyle = '--')
-pylab.plot(predicted_output[:,1], color = "blue", linestyle = '--')
-pylab.show()
+val_features = np.squeeze(val_features, axis=2)
+pred_features = np.squeeze(pred_features, axis=2)
+
+for i, v in enumerate(val_features):
+    pylab.figure(figsize=(20,10))
+    pylab.title(helper.translate(to_predict[i]))
+    pylab.plot(np.ravel(val_features[i][:, 0], order='F'), marker="o")
+    pylab.plot(np.ravel(pred_features[i][:, 0], order='F'), marker="x")
+    in_h = timedelta_input.seconds /60/60
+    out_h = timedelta_output.seconds /60/60
+    pylab.savefig('../img/predict' + helper.translate(to_predict[i])+ '-' + str(in_h) + str(out_h) + '--' + str(score)[:4] + '.png')
+    pylab.clf()
+    # pylab.show()
