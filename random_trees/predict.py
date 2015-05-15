@@ -21,7 +21,7 @@ ds = helper.dsimport()
 df = pd.DataFrame(ds)
 df.set_index(df.Date, inplace = True)
 df.interpolate(inplace=True)
-df = df.resample('5Min')
+df = df.resample('10Min')
 df.fillna(inplace=True, method='ffill')#we at first forwardfill
 df.fillna(inplace=True, method='bfill')#then do a backwards fill
 
@@ -66,18 +66,16 @@ def slice(ds, timedelta_input, timedelta_output, to_predict, freq=1):
         # print output_frame.shape
         #
 
-
     return (inputs, input_shape), (outputs, output_shape)
 
 
 
-#split off the last timedelta as test data
-
+#Define input and output frames
 timedelta_input = timedelta(hours = 3)
-timedelta_output =  timedelta(hours = 1)
-to_predict = ['Energie', 'Leistung']
+timedelta_output =  timedelta(hours = 3)
+to_predict = ['Energie']
 
-#cutting off the last 4 hours is probably too little to predcit
+#cutting off the validation frame
 last = df.index[-1] - timedelta_input - timedelta_output
 last = df.index[-1] - timedelta(days = 7)
 
@@ -90,39 +88,29 @@ validation_frame = df[last:]
 
 inputs = np.asarray(inputs)
 outputs = np.asarray(outputs)
+val_in = np.asarray(val_in)
+val_out = np.asarray(val_out)
 
 print 'start learning', datetime.now()
-forest = RandomForestRegressor(n_estimators = 10)
+forest = RandomForestRegressor(n_estimators = 10, n_jobs = 8)
 forest = forest.fit(inputs, outputs)
-
 print 'stopped learning at ', datetime.now()
 
-#
-# #what to put in here?
-# start = validation_frame.index[0]
-# validation_in = validation_frame[start:start+timedelta_input]
-# validation_out = validation_frame[start+timedelta_input:start+timedelta_input+timedelta_output]
-# for k in validation_out.keys():
-#     if k not in to_predict:
-#         del validation_out[k]
-
-# validation_in = validation_in.as_matrix().flatten()
-# validation_out = validation_out.as_matrix().flatten()
 predicted_output = forest.predict(val_in)
 
-validation_out = np.reshape(val_out, output_shape)
-predicted_output = np.reshape(predicted_output, output_shape)
+
+#reshape rows according to output_shape
+validation_out = np.reshape(val_out, (val_out.shape[0], output_shape[0], output_shape[1]))
+predicted_output = np.reshape(predicted_output, (predicted_output.shape[0], output_shape[0], output_shape[1]))
 
 print 'validation:'
 print validation_out.T
 print ''
 print 'prediction:'
 print predicted_output.T
-# print ''
-# print forest.score([validation_in], [validation_out])
-
-#TODO:
-#Find optimal shift
+print ''
+print 'score:'
+print forest.score(val_in, val_out)
 
 
 pylab.plot(validation_out[:,0], color = "green", linestyle = '-')
