@@ -27,6 +27,7 @@ df.fillna(inplace=True, method='ffill')#we at first forwardfill
 df.fillna(inplace=True, method='bfill')#then do a backwards fill
 
 
+
 def slice(ds, timedelta_input, timedelta_output, to_predict, stepwidth, input_sampling, output_sampling):
     """
     Slices a dataframe into inputs and outputframes and returns them along with their shape.
@@ -76,13 +77,13 @@ def wrapper(df, validation_delta, timedelta_input, timedelta_output, to_predict,
     print 'Stepwidth: ', stepwidth
     print 'Features to learn: ', helper.translate(to_predict)
 
-    #cutting off the validation frame
+    #CUTTING OF THE VALIDATION FRAME
     last = df.index[-1] - validation_delta
 
     train_frame = df[:last]
     validation_frame = df[last:]
 
-    #sampling the "function"
+    #SAMPLING THE FUNCTION
     (inputs, input_shape), (outputs, output_shape) = slice(train_frame, timedelta_input, timedelta_output, to_predict, stepwidth, input_sampling, output_sampling)
     (val_in, _), (val_out, _) = slice(validation_frame, timedelta_input, timedelta_output, to_predict, stepwidth, input_sampling, output_sampling)
 
@@ -98,7 +99,7 @@ def wrapper(df, validation_delta, timedelta_input, timedelta_output, to_predict,
 
     predicted_output = forest.predict(val_in)
 
-    #reshape rows according to output_shape
+    #RESHAPE AS BEFORE
     validation_out = np.reshape(val_out, (val_out.shape[0], output_shape[0], output_shape[1]))
     predicted_output = np.reshape(predicted_output, (predicted_output.shape[0], output_shape[0], output_shape[1]))
     score = forest.score(val_in, val_out)
@@ -112,7 +113,7 @@ def wrapper(df, validation_delta, timedelta_input, timedelta_output, to_predict,
     print 'score:'
     print score
 
-    #split values
+    #EXPORT TO PNG
     val_features = np.dsplit(validation_out, validation_out.shape[2])
     pred_features = np.dsplit(predicted_output, predicted_output.shape[2])
 
@@ -136,7 +137,10 @@ def wrapper(df, validation_delta, timedelta_input, timedelta_output, to_predict,
 def testrun():
     """The place to set up a set of runs and write them to a csv file"""
 
-    ds = []
+    run = []
+
+    #DROP PERCIPITATION
+    ds = df.drop('Niederschlag', 1)
 
     keys = ["validation_delta",
             "timedelta_input",
@@ -147,32 +151,39 @@ def testrun():
             "stepwidth",
             "score"]
 
-    #Set parameters
-    validation_delta = timedelta(days = 14)
-    timedelta_input = timedelta(hours = 3)
+    #PARAMETERS
+    validation_delta = timedelta(days = 7)
+    timedelta_inputs = [timedelta(hours = 3), timedelta(hours = 4), timedelta(hours = 5), timedelta(hours = 6)]
     timedelta_output =  timedelta(hours = 3)
-    to_predict = ['Energie', "Leistung"]
-    input_sampling = '60Min'
-    output_sampling = '60Min'
-    stepwidth = timedelta(minutes=60)
+    to_predict = ['Energie', 'Leistung']
+    input_sampling = '15Min'
+    output_sampling = '15Min'
+    stepwidths = [timedelta(minutes=15), timedelta(days=1)]
 
-    score = wrapper(df, validation_delta, timedelta_input, timedelta_output, to_predict, input_sampling, output_sampling, stepwidth)
+    for timedelta_input in timedelta_inputs:
+        for stepwidth in stepwidths:
 
-    d= {}
-    d["validation_delta"] = validation_delta
-    d["timedelta_input"] = timedelta_input
-    d["timedelta_output"] = timedelta_output
-    d["to_predict"] = to_predict
-    d["input_sampling"] = input_sampling
-    d["output_sampling"] = output_sampling
-    d["stepwidth"] = stepwidth
-    d["score"] = score
+            runtime = datetime.now()
+            score = wrapper(ds, validation_delta, timedelta_input, timedelta_output, to_predict, input_sampling, output_sampling, stepwidth)
+            runtime = datetime.now()- runtime
 
-    ds.append(d)
+            d= {}
+            d["validation_delta"] = validation_delta
+            d["timedelta_input"] = timedelta_input
+            d["timedelta_output"] = timedelta_output
+            d["to_predict"] = to_predict
+            d["input_sampling"] = input_sampling
+            d["output_sampling"] = output_sampling
+            d["stepwidth"] = stepwidth
+            d["score"] = score
+            d["runtime"] = runtime
+
+            run.append(d)
 
     with open('../img/testrun.csv', 'wb') as output_file:
         dict_writer = csv.DictWriter(output_file, keys)
         dict_writer.writeheader()
         dict_writer.writerows(ds)
 
+#DO IT!
 testrun()

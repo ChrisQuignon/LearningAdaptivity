@@ -1,0 +1,155 @@
+%\documentclass{beamer}
+%\usetheme{Pittsburgh}
+\documentclass{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage{default}
+\usepackage[procnames]{listings}
+\usepackage{graphicx}
+%\usepackage[toc,page]{appendix}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{color}
+%\usepackage{csvsimple}
+\usepackage{float}
+%\usepackage[T1]{fontenc}
+
+
+
+%Bibliogrpahy?
+%\usepackage{bibentry}
+%\nobibliography*
+%\bibentry{ }
+
+
+%Python
+\definecolor{keywords}{RGB}{255,0,90}
+\definecolor{comments}{RGB}{0,0,113}
+\definecolor{red}{RGB}{160,0,0}
+\definecolor{green}{RGB}{0,150,0}
+\lstset{language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{keywords},
+    commentstyle=\color{comments},
+    stringstyle=\color{red},
+    identifierstyle=\color{green},
+    breaklines = true,
+    columns=fullflexible,
+    %Numbering and tabs
+    %numbers=left,
+    %numberstyle=\tiny\color{gray},
+    %stepnumber=2,
+    %numbersep=1em,
+    tabsize=4,
+    showspaces=false,
+    showstringspaces=false}
+
+\begin{document}
+
+\title{Learning and Adaptivity}
+\subtitle{Report No. 4}
+\author{
+  \href{daiem.ali@smail.inf.h-brs.de}{Ali, Daiem}: \href{https://github.com/daiemna}{github.com/daiemna}\\
+  \href{christophe.quignon@smail.inf.h-brs.de}{Quignon, Christophe}:\href{https://github.com/ChrisQuignon}{github.com/ChrisQuignon}
+  %Familyname, Name
+}
+\date{\today}
+
+
+\maketitle
+
+%TODO: add abstract and conclusion
+%labels (or zero)
+%references (or zero)
+%remove scaffolding code
+
+
+\begin{abstract}
+\textbf{Abstract:}
+%TODO
+\end{abstract}
+
+\section{Parameter Test}
+\label{sec:parameter}
+%we do not optimize the built in parameters yet:
+%class sklearn.ensemble.RandomForestRegressor(n_estimators=10, criterion='mse', max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features='auto', max_leaf_nodes=None, bootstrap=True, oob_score=False, n_jobs=1, random_state=None, verbose=0, warm_start=False)
+
+
+\subsection{Input/ output features}
+\label{sec:}
+%In: all but percipitation
+%Out: Energy, power
+
+%TODO details: daiem
+
+\subsection{Training/ validation sets}
+\label{sec:}
+%Validation set is 7 days, rest is training
+%As analysed before
+
+\subsection{Input/ output frames}
+\label{sec:}
+%Input: 3, 4, 5, 6 hours
+
+\subsection{Sampling}
+\label{sec:}
+%more samples -> higher precision
+
+\subsubsection{Training set}
+\label{sec:}
+%1 minute, 1 day
+
+\subsubsection{Input frame}
+\label{sec:}
+%5 minutes
+
+\subsubsection{Output frame}
+\label{sec:}
+%5 minutes
+
+\section{Data}
+%append the data
+
+\section{Conclusion} 
+%TODO
+
+
+
+
+%BIBLIOGRPAHY?
+\bibliographystyle{plain}%amsalpha
+\bibliography{bib.bib}
+%\bibentry{}
+
+%\begin{appendix}
+%\section{}
+
+%\end{appendix}
+
+
+%COPY AND PASTE FROM HERE
+
+%\begin{enumerate}
+% \item
+%\end{enumerate}
+
+%\href{link}{text}
+
+%\begin[Language=Python]{lstlisting}
+%#PYTHON CODE HERE
+%\end{lstlisting}
+
+%\lstinputlisting[language=Python]{	}
+
+%\csvautotabular[separator=semicolon]{data.csv}
+
+
+%\begin{figure}[H]
+%  \centering
+%  \includegraphics[width=0.5\linewidth]{../img/	}
+%  %\caption{}
+%  %\label{fig:}
+%\end{figure}
+%PUT UNITS ON THE FIGURES
+
+\end{document}
