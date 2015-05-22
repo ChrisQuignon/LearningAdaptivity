@@ -364,4 +364,4 @@ def translate(word):
         return dict[word]
     else:
         print word, ' unkown!'
-        return
+        return word
