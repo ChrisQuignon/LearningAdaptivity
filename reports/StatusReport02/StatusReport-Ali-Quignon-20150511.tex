@@ -47,7 +47,7 @@
 \begin{document}
 
 \title{Learning and Adaptivity}
-\subtitle{Report No. 2}
+\subtitle{Report No. 3}
 \author{
   \href{daiem.ali@smail.inf.h-brs.de}{Ali, Daiem}: \href{https://github.com/daiemna}{github.com/daiemna}\\
   \href{christophe.quignon@smail.inf.h-brs.de}{Quignon, Christophe}:\href{https://github.com/ChrisQuignon}{github.com/ChrisQuignon}
@@ -101,12 +101,10 @@ Secondly, the model predicted the next 1 day data and then 2 days data and so on
   \caption[This is needed]{RMSE of time series prediction where time ranges varies for t+1d,t+2d ... t+60d where d=days.\footnotemark}
   \label{fig:daily_time_delta}
 \end{figure}
-
-\section{Method}
-
 \section{Conclusion} 
 %TODO
 %http://blog.kaggle.com/2012/05/01/chucking-everything-into-a-random-forest-ben-hamner-on-winning-the-air-quality-prediction-hackathon/
+The hourly analysis shows that the model gets really worst after 6 hours of prediction and then starts improving till later 100 hours(approx. 4 days). From the \ref{fig:daily_time_delta} we can observe that the prediction deteriorate 
 
 %BIBLIOGRPAHY?
 \bibliographystyle{plain}%amsalpha

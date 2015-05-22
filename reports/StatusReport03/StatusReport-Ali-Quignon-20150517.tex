@@ -65,7 +65,7 @@
 
 
 \begin{abstract}
-\textbf{Abstract:}
+\textbf{Abstract:}This week we reviewed the correlation diagram and cluster the related features in one block in correlation matrix. Also, to get the average error, we do multiple runs. We used the random sliding window approach to get different data for training and testing. We also extracted the seasonal trend and the weekly trend in the data and tried understanding the information depicted. To satisfy our curiosity we tried to assess "How much time weather conditions take to affect the energy consumption?", we used correlation between the energy and feature to study this effect.
 \end{abstract}
 
 \section{Correlation}
@@ -124,7 +124,7 @@ Much like spatial data, seasonal data can be decomposed as shown by \cite{loess}
 
 
 \section{Timeshift}
-As explained in the section \ref{sec:slidingwindow} we have different frames for the input and the output. These frames however can have a sever impact for the learning. The position as well as the size has an impact on information included and thus can affect the learning. If a trend is not included in the frame it can not be learned. On the other hand, a large frame significantly increases learning time. We aim to have an input frame size that includes enough information for a trend and an output frame size that covers the results of the input. The amount of information within the frames can be scaled by subsampling.\\
+As explained in the section \ref{sec:slidingwindow} we have different frames for the input and the output. These frames however can have a sever impact for the learning. The position as well as the size has an impact on information included and thus can affect the learning. If a trend is not included in the frame it can not be learned. On the other hand, a large frame significantly increases learning time. We aim to have an input frame size that includes enough information for a trend and an output frame size that covers the results of the input. The amount of information within the frames can be scaled by sub-sampling.\\
 The critical point here is the size of the output frame. Once we have a change in the input the output frame must cover the time where the changed input affects the output. To find this delays, we analysed the correlation of the seasonal part of the time series as explained in section \ref{sec:season}. Figure \ref{fig:timeshift} show the time shift for the maximum correlation between the features. One can see the same groups as in the regular correlation (See Section \ref{sec:correlation}). This means that the different sub parts of the system have different delays, varying between a few minutes and 4 hours.\\
 Interpreting these shifts is not trivial, for features with a low correlation they may be discarded, because they probably do not cause each other but to a different input as the time of the day. For the small delay between the input and the output temperature the delay simply is the time the liquid travels. For the delay between the outside temperature and the energy this is probably the delay caused by the physics of the building.\\
 However, 4 hours seems to be a reasonable frame size.
@@ -140,6 +140,7 @@ However, 4 hours seems to be a reasonable frame size.
 
 \section{Conclusion} 
 %TODO
+ The correlation has really clear information that outside temperature is inversely related to energy and power is directly related to energy, this is the sanity check on our data. The seasonal decomposition is explained but not complete, we have written scripts to see seasonal decomposition of other features as well. In the end we have time delay matrix, in which energy consumption is immediately effected by outside temperature.
 
 
 
