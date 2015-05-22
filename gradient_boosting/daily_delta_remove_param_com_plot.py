@@ -46,15 +46,25 @@ print("training on %.2f percent data"%(train_per))
 to_be_predicted = ['Energie'];
 original_params = ["Aussentemperatur","Niederschlag","Relative Feuchte","Ruecklauftemperatur",
 			   "Volumenstrom" , "Vorlauftemperatur"]
-for param_num in range(0,len(original_params)):
-	param_removed = original_params[param_num];
-	to_be_input = list(original_params);
-	to_be_input.remove(param_removed);
+fig = pylab.figure(figsize=(20,10));
+leg=[];
+first_run = True;
+
+for param_num in range(0,len(original_params)+1):
+	param_removed = "removing any parameter";
+	if first_run:
+		first_run = False;
+		to_be_input = list(original_params);
+	else:
+		param_removed = original_params[param_num-1];
+		to_be_input = list(original_params);
+		to_be_input.remove(param_removed);
 
 	training_ip = train_data.loc[:,to_be_input].values;
 	training_op = train_data.loc[:,to_be_predicted].values;
 
-	regressor = RandomForestRegressor(n_estimators = 100,n_jobs=100)
+	# regressor = RandomForestRegressor(n_estimators = 100,n_jobs=100)
+	regressor = GradientBoostingRegressor(n_estimators = 100,learning_rate=0.5)
 
 	regressor = regressor.fit(training_ip, training_op.ravel())
 	regressor_name = str(regressor).split("(")[0]
@@ -84,16 +94,14 @@ for param_num in range(0,len(original_params)):
 		# R2_list.append(R2);
 		# mean_absolute_error_list.append(mae);
 
-	pylab.figure(figsize=(20,10))
+	
 	pylab.plot(MSE_list)
-	pylab.legend(["RMSE"])
-
-	pylab.title(regressor_name + "'s Error of predictions removed : "+helper.translate(param_removed))
-	pylab.xlabel("time delta += 1 day")
-	pylab.ylabel("Error")
-	# ax = pylab.gca()
-	# ax.set_yticks(np.arange(20))
-	plt.grid()
-	pylab.savefig('../img/'+regressor_name+'_day_error_without_'+param_removed+'.png')
-	# pylab.show()
-	pylab.close()
+	leg.append("w/o "+helper.translate(param_removed));
+pylab.legend(leg);
+pylab.title(regressor_name + "'s RMSE of predictions with removed parameters")
+pylab.xlabel("time delta += 1 day")
+pylab.ylabel("Error")	
+pylab.grid()
+# pylab.show()
+pylab.savefig('../img/'+regressor_name+'_day_error_without_some_params.png')
+# fig.close()

@@ -48,10 +48,10 @@ to_be_input = ["Aussentemperatur","Niederschlag","Relative Feuchte","Ruecklaufte
 training_ip = train_data.loc[:,to_be_input].values;
 training_op = train_data.loc[:,to_be_predicted].values;
 
-# regressor = RandomForestRegressor(n_estimators = 100,n_jobs=100)
+regressor = RandomForestRegressor(n_estimators = 100,n_jobs=100)
 # regressor = AdaBoostRegressor(n_estimators = 100,loss='exponential',learning_rate=0.3)
 # regressor = ExtraTreesRegressor(n_estimators = 100,n_jobs=100)
-regressor = GradientBoostingRegressor(n_estimators = 100,learning_rate=0.5)
+# regressor = GradientBoostingRegressor(n_estimators = 100,learning_rate=0.5)
 regressor = regressor.fit(training_ip, training_op.ravel())
 regressor_name = str(regressor).split("(")[0]
 
@@ -60,7 +60,7 @@ MSE_list=[];
 R2_list = [];
 mean_absolute_error_list = [];
 test_start = df.index.searchsorted(datetime(2014, 12, 1,0,1));
-days_limit = 60
+days_limit = 10
 for step in range(1,days_limit+1):
 	print("-------------------------");
 	test_end = df.index.searchsorted(datetime(2014, 12, 1,0,1)+timedelta(days=step));
@@ -84,17 +84,18 @@ for step in range(1,days_limit+1):
 	mean_absolute_error_list.append(mae);
 
 # print mean_absolute_error_list
-pylab.plot(mean_absolute_error_list)
+pylab.figure(figsize=(20,10))
+# pylab.plot(mean_absolute_error_list)
 pylab.plot(MSE_list)
 # pylab.plot(R2_list)
-pylab.legend(["Mean Absolute Error", "RMSE"])
+pylab.legend(["RMSE"])
 
 pylab.title(regressor_name + "'s Error of predictions after time delta")
 pylab.xlabel("time delta += 1 day")
 pylab.ylabel("Error")
 ax = pylab.gca()
-ax.set_xticks(np.arange(0,days_limit+1,5))
-ax.set_yticks(np.arange(0,101,10))
+# ax.set_xticks(np.arange(0,days_limit+1))
+# ax.set_yticks(np.arange(0,101,10))
 plt.grid()
 pylab.savefig('../img/'+regressor_name+'_day_error.png')
 # pylab.show()
