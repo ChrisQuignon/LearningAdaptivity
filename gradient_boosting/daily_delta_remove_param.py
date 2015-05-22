@@ -54,7 +54,7 @@ for param_num in range(0,len(original_params)):
 	training_ip = train_data.loc[:,to_be_input].values;
 	training_op = train_data.loc[:,to_be_predicted].values;
 
-	regressor = GradientBoostingRegressor(n_estimators = 100,learning_rate=0.5)
+	regressor = RandomForestRegressor(n_estimators = 100,n_jobs=100)
 
 	regressor = regressor.fit(training_ip, training_op.ravel())
 	regressor_name = str(regressor).split("(")[0]
@@ -84,6 +84,7 @@ for param_num in range(0,len(original_params)):
 		# R2_list.append(R2);
 		# mean_absolute_error_list.append(mae);
 
+	pylab.figure(figsize=(20,10))
 	pylab.plot(MSE_list)
 	pylab.legend(["RMSE"])
 
@@ -91,8 +92,7 @@ for param_num in range(0,len(original_params)):
 	pylab.xlabel("time delta += 1 day")
 	pylab.ylabel("Error")
 	# ax = pylab.gca()
-	# ax.set_xticks(np.arange(0,days_limit+1,5))
-	# ax.set_yticks(np.arange(0,101,10))
+	# ax.set_yticks(np.arange(20))
 	plt.grid()
 	pylab.savefig('../img/'+regressor_name+'_day_error_without_'+param_removed+'.png')
 	# pylab.show()
