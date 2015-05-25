@@ -154,32 +154,33 @@ def testrun():
 
     #PARAMETERS
     validation_delta = timedelta(days = 7)
-    timedelta_inputs = [timedelta(hours = 3), timedelta(hours = 4), timedelta(hours = 6), timedelta(hours = 12), timedelta(hours = 24)]
+    timedelta_inputs = [timedelta(hours = 24)]
     timedelta_output =  timedelta(hours = 3)
     to_predict = ['Energie', 'Leistung']
     input_sampling = '10Min'
     output_sampling = '10Min'
-    stepwidths = [timedelta(minutes=10), timedelta(days=1)]
+    stepwidths = [timedelta(minutes=10)]
 
     for timedelta_input in timedelta_inputs:
         for stepwidth in stepwidths:
+            for _ in range(30):
 
-            runtime = datetime.now()
-            score = wrapper(ds, validation_delta, timedelta_input, timedelta_output, to_predict, input_sampling, output_sampling, stepwidth)
-            runtime = datetime.now()- runtime
+                runtime = datetime.now()
+                score = wrapper(ds, validation_delta, timedelta_input, timedelta_output, to_predict, input_sampling, output_sampling, stepwidth)
+                runtime = datetime.now()- runtime
 
-            d= {}
-            d["validation_delta"] = validation_delta
-            d["timedelta_input"] = timedelta_input
-            d["timedelta_output"] = timedelta_output
-            d["to_predict"] = to_predict
-            d["input_sampling"] = input_sampling
-            d["output_sampling"] = output_sampling
-            d["stepwidth"] = stepwidth
-            d["score"] = score
-            d["runtime"] = runtime
+                d= {}
+                d["validation_delta"] = validation_delta
+                d["timedelta_input"] = timedelta_input
+                d["timedelta_output"] = timedelta_output
+                d["to_predict"] = to_predict
+                d["input_sampling"] = input_sampling
+                d["output_sampling"] = output_sampling
+                d["stepwidth"] = stepwidth
+                d["score"] = score
+                d["runtime"] = runtime
 
-            run.append(d)
+                run.append(d)
 
     with open('../img/testrun.csv', 'wb') as output_file:
         dict_writer = csv.DictWriter(output_file, keys)
