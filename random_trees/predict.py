@@ -67,7 +67,7 @@ def slice(ds, timedelta_input, timedelta_output, to_predict, stepwidth, input_sa
 
 
 def wrapper(df, validation_delta, timedelta_input, timedelta_output, to_predict, input_sampling, output_sampling, stepwidth):
-    """wrapper for a complete prediction run"""
+    """Wrapper for a complete prediction run on a given dataframe df"""
 
     print 'Learning:'
     print 'Input frame: ', timedelta_input
@@ -104,12 +104,12 @@ def wrapper(df, validation_delta, timedelta_input, timedelta_output, to_predict,
     predicted_output = np.reshape(predicted_output, (predicted_output.shape[0], output_shape[0], output_shape[1]))
     score = forest.score(val_in, val_out)
 
-    print 'validation:'
-    print validation_out.T
-    print ''
-    print 'prediction:'
-    print predicted_output.T
-    print ''
+    # print 'validation:'
+    # print validation_out.T
+    # print ''
+    # print 'prediction:'
+    # print predicted_output.T
+    # print ''
     print 'score:'
     print score
 
@@ -149,16 +149,17 @@ def testrun():
             "input_sampling",
             "output_sampling",
             "stepwidth",
-            "score"]
+            "score",
+            "runtime"]
 
     #PARAMETERS
     validation_delta = timedelta(days = 7)
-    timedelta_inputs = [timedelta(hours = 3), timedelta(hours = 4), timedelta(hours = 5), timedelta(hours = 6)]
+    timedelta_inputs = [timedelta(hours = 3), timedelta(hours = 4), timedelta(hours = 6), timedelta(hours = 12), timedelta(hours = 24)]
     timedelta_output =  timedelta(hours = 3)
     to_predict = ['Energie', 'Leistung']
-    input_sampling = '15Min'
-    output_sampling = '15Min'
-    stepwidths = [timedelta(minutes=15), timedelta(days=1)]
+    input_sampling = '10Min'
+    output_sampling = '10Min'
+    stepwidths = [timedelta(minutes=10), timedelta(days=1)]
 
     for timedelta_input in timedelta_inputs:
         for stepwidth in stepwidths:
@@ -183,7 +184,7 @@ def testrun():
     with open('../img/testrun.csv', 'wb') as output_file:
         dict_writer = csv.DictWriter(output_file, keys)
         dict_writer.writeheader()
-        dict_writer.writerows(ds)
+        dict_writer.writerows(run)
 
 #DO IT!
 testrun()

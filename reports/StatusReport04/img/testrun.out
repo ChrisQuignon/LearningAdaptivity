@@ -1,0 +1,110 @@
+Learning:
+Input frame:  3:00:00
+Input sampling:  10Min
+Output frame:  3:00:00
+Output sampling:  10Min
+Stepwidth:  0:10:00
+Features to learn:  ['energy', 'power']
+start learning 2015-05-25 10:40:19.377571
+stopped learning at  2015-05-25 10:42:11.750507
+score:
+0.468030671322
+Learning:
+Input frame:  3:00:00
+Input sampling:  10Min
+Output frame:  3:00:00
+Output sampling:  10Min
+Stepwidth:  1 day, 0:00:00
+Features to learn:  ['energy', 'power']
+start learning 2015-05-25 10:42:13.498076
+stopped learning at  2015-05-25 10:42:13.802077
+score:
+-71.0002768225
+Learning:
+Input frame:  4:00:00
+Input sampling:  10Min
+Output frame:  3:00:00
+Output sampling:  10Min
+Stepwidth:  0:10:00
+Features to learn:  ['energy', 'power']
+start learning 2015-05-25 10:44:03.667691
+stopped learning at  2015-05-25 10:46:33.559315
+score:
+0.485082491028
+Learning:
+Input frame:  4:00:00
+Input sampling:  10Min
+Output frame:  3:00:00
+Output sampling:  10Min
+Stepwidth:  1 day, 0:00:00
+Features to learn:  ['energy', 'power']
+start learning 2015-05-25 10:46:35.259722
+stopped learning at  2015-05-25 10:46:35.679217
+score:
+-3.45878919428
+Learning:
+Input frame:  6:00:00
+Input sampling:  10Min
+Output frame:  3:00:00
+Output sampling:  10Min
+Stepwidth:  0:10:00
+Features to learn:  ['energy', 'power']
+start learning 2015-05-25 10:48:25.019842
+stopped learning at  2015-05-25 10:52:10.774085
+score:
+0.498096318578
+Learning:
+Input frame:  6:00:00
+Input sampling:  10Min
+Output frame:  3:00:00
+Output sampling:  10Min
+Stepwidth:  1 day, 0:00:00
+Features to learn:  ['energy', 'power']
+start learning 2015-05-25 10:52:12.409523
+stopped learning at  2015-05-25 10:52:13.038055
+score:
+-0.491727748867
+Learning:
+Input frame:  12:00:00
+Input sampling:  10Min
+Output frame:  3:00:00
+Output sampling:  10Min
+Stepwidth:  0:10:00
+Features to learn:  ['energy', 'power']
+start learning 2015-05-25 10:54:04.892506
+stopped learning at  2015-05-25 11:02:07.791283
+score:
+0.541215837692
+Learning:
+Input frame:  12:00:00
+Input sampling:  10Min
+Output frame:  3:00:00
+Output sampling:  10Min
+Stepwidth:  1 day, 0:00:00
+Features to learn:  ['energy', 'power']
+start learning 2015-05-25 11:02:10.041539
+stopped learning at  2015-05-25 11:02:12.787159
+score:
+0.13669733871
+Learning:
+Input frame:  1 day, 0:00:00
+Input sampling:  10Min
+Output frame:  3:00:00
+Output sampling:  10Min
+Stepwidth:  0:10:00
+Features to learn:  ['energy', 'power']
+start learning 2015-05-25 11:04:26.628673
+stopped learning at  2015-05-25 11:29:06.349532
+score:
+0.633754516611
+Learning:
+Input frame:  1 day, 0:00:00
+Input sampling:  10Min
+Output frame:  3:00:00
+Output sampling:  10Min
+Stepwidth:  1 day, 0:00:00
+Features to learn:  ['energy', 'power']
+start learning 2015-05-25 11:29:08.091562
+stopped learning at  2015-05-25 11:29:10.719474
+score:
+0.937989301711
