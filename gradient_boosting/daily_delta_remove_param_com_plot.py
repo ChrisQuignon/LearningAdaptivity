@@ -63,8 +63,8 @@ for param_num in range(0,len(original_params)+1):
 	training_ip = train_data.loc[:,to_be_input].values;
 	training_op = train_data.loc[:,to_be_predicted].values;
 
-	# regressor = RandomForestRegressor(n_estimators = 100,n_jobs=100)
-	regressor = GradientBoostingRegressor(n_estimators = 100,learning_rate=0.5)
+	regressor = RandomForestRegressor(n_estimators = 100,n_jobs=100)
+	# regressor = GradientBoostingRegressor(n_estimators = 100,learning_rate=0.5)
 
 	regressor = regressor.fit(training_ip, training_op.ravel())
 	regressor_name = str(regressor).split("(")[0]
