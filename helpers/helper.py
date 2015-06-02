@@ -65,7 +65,11 @@ def dsimport():
 
                 else:
                     print 'ERROR: Key ' + key + 'not known'
-
+        date_tup = d['Date'].date().timetuple();
+        # d['DOW'] = int(date_tup.tm_wday); #day of the week
+        d['DOY'] = int(date_tup.tm_yday); #day of the year
+        # d['DOM'] = int(date_tup.tm_mday); #day of the month
+        # d['HOD'] = int(date_tup.tm_hour); #hour of the day
         ds.append(d)
     return ds
 
