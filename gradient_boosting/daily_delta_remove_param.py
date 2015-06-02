@@ -76,6 +76,7 @@ for param_num in range(0,len(original_params)):
 
 		test_predictions = regressor.predict(test_ip);
 
+
 		MSE = mean_squared_error(test_actual, test_predictions)**0.5;
 		R2 = r2_score(test_actual, test_predictions);
 		mae = mean_absolute_error(test_actual, test_predictions)
@@ -83,6 +84,20 @@ for param_num in range(0,len(original_params)):
 		MSE_list.append(MSE);
 		# R2_list.append(R2);
 		# mean_absolute_error_list.append(mae);
+
+		#PLOT PREDICTION
+		if step == days_limit:
+			pylab.figure(figsize=(20,10))
+			pylab.plot(test_actual, color = 'blue')
+			pylab.plot(test_predictions, color = 'red')
+
+			pylab.title(regressor_name + "'s Error of predictions removed : "+helper.translate(param_removed) + '\n' + "Mean Squared Error : %.2f"%(MSE))
+			pylab.xlabel("5 minutes")
+			pylab.ylabel(helper.translate(to_be_predicted[0]))
+			pylab.tight_layout()
+			# pylab.show()
+			pylab.savefig('../img/'+regressor_name+'_regression_without_'+param_removed+'.png')
+			pylab.clf()
 
 	pylab.figure(figsize=(20,10))
 	pylab.plot(MSE_list)

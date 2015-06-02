@@ -86,6 +86,7 @@ for param_num in range(0,len(original_params)+1):
 
 		test_predictions = regressor.predict(test_ip);
 
+
 		MSE = mean_squared_error(test_actual, test_predictions)**0.5;
 		R2 = r2_score(test_actual, test_predictions);
 		mae = mean_absolute_error(test_actual, test_predictions)
@@ -94,13 +95,13 @@ for param_num in range(0,len(original_params)+1):
 		# R2_list.append(R2);
 		# mean_absolute_error_list.append(mae);
 
-	
+
 	pylab.plot(MSE_list)
 	leg.append("w/o "+helper.translate(param_removed));
 pylab.legend(leg);
 pylab.title(regressor_name + "'s RMSE of predictions with removed parameters")
 pylab.xlabel("time delta += 1 day")
-pylab.ylabel("Error")	
+pylab.ylabel("Error")
 pylab.grid()
 # pylab.show()
 pylab.savefig('../img/'+regressor_name+'_day_error_without_some_params.png')
