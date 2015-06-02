@@ -21,12 +21,13 @@ ds = helper.dsimport()
 
 df = pd.DataFrame(ds)
 df.set_index(df.Date, inplace = True)
-df.interpolate(inplace=True)
+df.Energie.resample('1Min', fill_method="ffill")
 df = df.resample('1Min')
+# df.interpolate(inplace=True)
 df.fillna(inplace=True, method='ffill')#we at first forwardfill
-df.fillna(inplace=True, method='bfill')#then do a backwards fill
+# df.fillna(inplace=True, method='bfill')#then do a backwards fill
 
-
+#runs 1.5h on work laptop
 
 def slice(ds, timedelta_input, timedelta_output, to_predict, stepwidth, input_sampling, output_sampling):
     """
@@ -53,9 +54,6 @@ def slice(ds, timedelta_input, timedelta_output, to_predict, stepwidth, input_sa
             if k not in to_predict:
                 del output_frame[k]
 
-        input_shape = input_frame.shape
-        output_shape = output_frame.shape
-
         inputs.append(input_frame.as_matrix().flatten())
         outputs.append(output_frame.as_matrix().flatten())
 
@@ -63,7 +61,7 @@ def slice(ds, timedelta_input, timedelta_output, to_predict, stepwidth, input_sa
         start_input_frame  = start_input_frame + stepwidth
 
 
-    return (inputs, input_shape), (outputs, output_shape)
+    return (inputs, input_frame.shape), (outputs, output_frame.shape)
 
 
 def wrapper(df, validation_delta, timedelta_input, timedelta_output, to_predict, input_sampling, output_sampling, stepwidth):
@@ -153,9 +151,9 @@ def testrun():
             "runtime"]
 
     #PARAMETERS
-    validation_delta = timedelta(days = 7)
+    validation_delta = timedelta(days = 10)
     timedelta_inputs = [timedelta(hours = 24)]
-    timedelta_output =  timedelta(hours = 3)
+    timedelta_output =  timedelta(hours = 24)
     to_predict = ['Energie', 'Leistung']
     input_sampling = '10Min'
     output_sampling = '10Min'
@@ -163,7 +161,7 @@ def testrun():
 
     for timedelta_input in timedelta_inputs:
         for stepwidth in stepwidths:
-            for _ in range(30):
+            for _ in range(1):
 
                 runtime = datetime.now()
                 score = wrapper(ds, validation_delta, timedelta_input, timedelta_output, to_predict, input_sampling, output_sampling, stepwidth)
