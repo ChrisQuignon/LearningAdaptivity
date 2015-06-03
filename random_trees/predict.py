@@ -23,11 +23,10 @@ df = pd.DataFrame(ds)
 df.set_index(df.Date, inplace = True)
 df.Energie.resample('1Min', fill_method="ffill")
 df = df.resample('1Min')
+df.Energie.resample('D')
 # df.interpolate(inplace=True)
 df.fillna(inplace=True, method='ffill')#we at first forwardfill
 # df.fillna(inplace=True, method='bfill')#then do a backwards fill
-
-#runs 1.5h on work laptop
 
 def slice(ds, timedelta_input, timedelta_output, to_predict, stepwidth, input_sampling, output_sampling):
     """
@@ -123,9 +122,9 @@ def wrapper(df, validation_delta, timedelta_input, timedelta_output, to_predict,
         pylab.title(helper.translate(to_predict[i]))
         pylab.plot(np.ravel(val_features[i][:, 0], order='F'), marker="o")
         pylab.plot(np.ravel(pred_features[i][:, 0], order='F'), marker="x")
-        in_h = timedelta_input.seconds /60/60
-        out_h = timedelta_output.seconds /60/60
-        pylab.savefig('../img/predict-' + helper.translate(to_predict[i])+ '-' + str(in_h) + str(out_h) + '--' + str(score)[:5] + '.png')
+        # in_h = timedelta_input.seconds /60.0/60.0
+        # out_h = timedelta_output.seconds /60.0/60.0
+        pylab.savefig('../img/predict-' + helper.translate(to_predict[i])+ '--' + str(score)[:5] + '.png')
         # pylab.show()
         pylab.clf()
 
@@ -156,12 +155,12 @@ def testrun():
     timedelta_output =  timedelta(hours = 24)
     to_predict = ['Energie', 'Leistung']
     input_sampling = '10Min'
-    output_sampling = '10Min'
+    output_sampling = '24H'
     stepwidths = [timedelta(minutes=10)]
 
     for timedelta_input in timedelta_inputs:
         for stepwidth in stepwidths:
-            for _ in range(1):
+            for _ in range(30):
 
                 runtime = datetime.now()
                 score = wrapper(ds, validation_delta, timedelta_input, timedelta_output, to_predict, input_sampling, output_sampling, stepwidth)
