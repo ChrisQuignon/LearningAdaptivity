@@ -44,8 +44,10 @@ print("training on %.2f percent data"%(train_per))
 
 
 to_be_predicted = ['Energie'];
-original_params = ["Aussentemperatur","Niederschlag","Relative Feuchte","Ruecklauftemperatur",
-			   "Volumenstrom" , "Vorlauftemperatur"]
+original_params = ["Aussentemperatur", "Niederschlag", "Relative Feuchte", "Ruecklauftemperatur",
+			   "Volumenstrom", "Vorlauftemperatur", "DOY"];
+skip_list = ["Aussentemperatur", "Relative Feuchte", "Ruecklauftemperatur",
+			   "Vorlauftemperatur"];
 fig = pylab.figure(figsize=(20,10));
 leg=[];
 first_run = True;
@@ -59,11 +61,12 @@ for param_num in range(0,len(original_params)+1):
 		param_removed = original_params[param_num-1];
 		to_be_input = list(original_params);
 		to_be_input.remove(param_removed);
-
+	if param_removed in skip_list:
+		continue;
 	training_ip = train_data.loc[:,to_be_input].values;
 	training_op = train_data.loc[:,to_be_predicted].values;
 
-	regressor = RandomForestRegressor(n_estimators = 100,n_jobs=100)
+	regressor = RandomForestRegressor(n_estimators = 100,n_jobs=100,max_depth=6)
 	# regressor = GradientBoostingRegressor(n_estimators = 100,learning_rate=0.5)
 
 	regressor = regressor.fit(training_ip, training_op.ravel())

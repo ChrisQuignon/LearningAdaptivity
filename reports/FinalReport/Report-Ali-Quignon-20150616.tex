@@ -114,16 +114,39 @@ The Energy in watt hours, calculated per day.
 
 \subsection{Seasonal decomposition}
 %TODO
+Our data has a seasonal trend this is shown in the figure \ref{fig:season_outside_temperature}, in the figure the whole week outside temperature is shown, we can see that peak is repeated every day with little offset. for this reason we Introduced the Day of the year(DOY) as a feature. The effect of introducing DOY in \ref{fig:RandomForestRegressor_day_error_without_some_params_DOY} 
 \begin{figure}[H]
   %\raggedleft
   \includegraphics[width=0.6\linewidth]{img/season-outside_temperature.png}
-  \caption{Correlation of the datasets.}
-  \label{fig:correlation}
+  \caption{Seasonal Decomposition of the datasets.}
+  \label{fig:season_outside_temperature}
+\end{figure}
+
+\begin{figure}[H]
+  \center
+  \includegraphics[width=1\linewidth]{img/RandomForestRegressor_day_error_without_some_params.png}
+  \caption{Random Forest with effect of removing each parameter}
+  \label{fig:RandomForestRegressor_day_error_without_some_params}
+\end{figure}
+
+\begin{figure}[H]
+  \center
+  \includegraphics[width=1\linewidth]{img/RandomForestRegressor_day_error_without_some_params_DOY.png}
+  \caption{Random Forest with Day of the Year information}
+  \label{fig:RandomForestRegressor_day_error_without_some_params_DOY}
 \end{figure}
 
 
 \subsection{Exclusion of precipitation}	
 %TODO
+During analysis we assessed the importance of features, to study this we removed each feature and plotted the (Root Mean Squared Error)RMSE of the predictions it can be seen form the figure \ref{fig:RandomForestRegressor_day_error_without_precipation} that their is little or no effect on RMSE without precipitation.
+
+\begin{figure}[H]
+  \center
+  \includegraphics[width=1\linewidth]{img/RandomForestRegressor_day_error_without_precipation.png}
+  \caption{Random Forest without Precipitation}
+  \label{fig:RandomForestRegressor_day_error_without_precipation}
+\end{figure}
 
 \section{Methods}
 \label{sec:methods}
