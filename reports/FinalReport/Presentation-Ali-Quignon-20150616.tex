@@ -124,9 +124,11 @@
 \frametitle{Methods}
 \framesubtitle{Gradient boosting}
 
-%TODO
 \begin{itemize}
-\item .
+\item Include DOY
+\item Exclude precipitation
+\item Quick results
+\item Prediction gets bad after 7 days 
 \end{itemize}
 
 
@@ -136,7 +138,6 @@
   \label{fig:gradientboost}
 \end{figure}
 
-%TODO
 \end{frame}
 
 \begin{frame}
@@ -145,14 +146,14 @@
 
 \begin{itemize}
 \item sliding window with DOY, without precipitation
-\item prediction varies
-\item precision is not optimal
+\item $0.89 R^{2}$ error
+\item prediction varies and is not optimal
 \item long learning time
 \end{itemize}
 
 \begin{figure}[H]
   \includegraphics[width=0.8\linewidth]{img/predict-energy--0p890.png}
-  \caption{Prediction of the energy (watt hours) over time (minutes) using the sliding window approach.}
+  \caption{Prediction of the energy (watt hours) per time (10 minutes) using the sliding window approach.}
   \label{fig:Prediction}
 \end{figure}
 
