@@ -62,21 +62,17 @@
 
 \begin{abstract}
 \textbf{Abstract:}
-%TODO we conluded...
+Heat pumps are a sustainable way to transfer thermal energy into out away from builds to keep a comfortable temperature. But to operate a heating pump is not a trivial task, different building distribute the heat differently and weather with its chaotic nature has a major influence on the temperature flow. With an accurate prediction of the energy consumption, one can increase their efficiency and operating cost.
+Thus we want to predict the behaviour or an energy pump with respect to the weather.\\
+%TODO include method and conclusion
 \end{abstract}
-
-\section{Problem}
-\label{sec:problem}
-%TODO: CHECK READ, maybe move to abstract
-Heat pumps are a sustainable way to transfer thermal energy into out away from builds to keep a comfortable temperature. But to operate a heating pump is not a trivial task, different building distribute the heat differently and weather with its chaotic nature has a major influence on the temperature flow. In addition, they suffer from a suboptimal efficiency because they often have a bad time delay from sensing to acting. This could be counteracted by predicting future temperatures to overact sensors. efficiency could be increased by predicting energy consumption and delay that to times where energy is cheap. 
-Thus we want to predict the behaviour or an energy pump with respect to the weather.
-
 
 \section{Data}
 \label{sec:data}
 %TODO: CHECK READ
 %what is the problem what is the data wheat is the purpose
-The data spans the time between July 2014 to February 2015, with a total of 242 days.
+
+The Recogizer GmbH provided me a dataset of 4 sensor reading, three weather indicators and an accumulated energy consumption. In 242 days (between July 2014 to February 2015), over 1,300,000 data points where collected.
 
 \paragraph{Weather data:}
 The regional weather is from the official recordings of the "Deutsche Wetterdienst" (German weather service) and contains:
@@ -98,29 +94,31 @@ The Measurements from the systems are:
 \end{itemize}
 
 \paragraph{Accumulated data:}
-The Energy in watt hours, calculated per day.
+The energy in watt hours, calculated per day.
 
 \section{Analysis}
 \label{sec:analysis}
 
-\subsection{Correlation}
+%\subsection{Correlation}
 %TODO
-\begin{figure}[H]
-  %\raggedleft
-  \includegraphics[width=0.6\linewidth]{img/correlation.png}
-  \caption{Correlation of the datasets.}
-  \label{fig:correlation}
-\end{figure}
+%\begin{figure}[H]
+%  %\raggedleft
+%  \includegraphics[width=0.6\linewidth]{img/correlation.png}
+%  \caption{Correlation of the datasets.}
+%  \label{fig:correlation}
+%\end{figure}
 
 \subsection{Seasonal decomposition}
 %TODO
-Our data has a seasonal trend this is shown in the figure \ref{fig:season_outside_temperature}, in the figure the whole week outside temperature is shown, we can see that peak is repeated every day with little offset. for this reason we Introduced the Day of the year(DOY) as a feature. The effect of introducing DOY in \ref{fig:RandomForestRegressor_day_error_without_some_params_DOY} 
+Our data has a seasonal trend which is shown in the figure \ref{fig:season_outside_temperature}. In the figure recordings of one whole week outside temperature is shown. We can see that peak is repeated every day with little offset. for this reason we introduced the day of the year(DOY) as a feature. The effect of introducing DOY in \ref{fig:RandomForestRegressor_day_error_without_some_params_DOY} 
 \begin{figure}[H]
-  %\raggedleft
+  \center
   \includegraphics[width=0.6\linewidth]{img/season-outside_temperature.png}
-  \caption{Seasonal Decomposition of the datasets.}
+  \caption{Seasonal (weekly) decomposition of the datasets.}
   \label{fig:season_outside_temperature}
 \end{figure}
+
+
 
 \begin{figure}[H]
   \center
@@ -150,6 +148,7 @@ During analysis we assessed the importance of features, to study this we removed
 
 \section{Methods}
 \label{sec:methods}
+To find an optimal prediction, we analysed two methods: For the gradient boosting we took a standard implementation and looked for optimal parameter, where for the time shifting window approach we focussed on the preprocessing of the data.
 %TODO
 
 \subsection{sliding window}
@@ -159,12 +158,12 @@ During analysis we assessed the importance of features, to study this we removed
 As suggested in \cite{vafaeipour2014application} the sliding window approach was used to learn how to predict. In this approach the time series is split into windows or frames of input and output. Unlike in regression learning, those windows are shifted. Thus the learning algorithm does not learn the relation of the features at the same time, but their relation in the future. With this approach, it is possible to include all features as an input and select few of them as an output. This can be enhanced further by including predictable features into the input. These three methods are depicted in Figure \ref{fig:slidingwindow}.\\
 The random forest implementation we are using however can not handle input with more than one dimension. Thus we flatten the input to one dimension. Since the feature values are typically easily separable, we expect the random forest to recognize this flattening in an early step. We do not include this as an extra information into the trees.
 \begin{figure}[H]
-  %\raggedleft
+  \center
   \includegraphics[width=0.6\linewidth]{img/regpred.png}
   \caption{Input(green) and output(red) frames for regression(left), prediction(middle) and enhanced prediction(right).}
   \label{fig:correlation}
 \end{figure}
-\newpage
+
 \subsection{gradient boost}
 %TODO
 We compared Random Forest with Gradient boosting in which Random Forest outperformed the Gradient Boosting the results can be seen form the figure.
