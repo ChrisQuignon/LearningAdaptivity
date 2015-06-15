@@ -65,62 +65,94 @@
 
 %what is the problem what is the data wheat is the purpose
 
+\begin{itemize}
+\item 8 features
+\item 242 days
+\item 1 measurement every minute
+\end{itemize}
+
+%seasonal decomposition
+\begin{figure}[H]
+  \center
+  \includegraphics[width=0.6\linewidth]{img/correlation.png}
+  \caption{Correlation of the datasets.}
+  \label{fig:correlation}
+\end{figure}
+
+
 \end{frame}
 
 
 \begin{frame}
 \frametitle{Analysis}
 
-%correlation
-%seasonal decomposition
+\begin{itemize}
+\item seasonal decomposition
+\item (time shift) correlation 
+\item parameter runs
+\end{itemize}
+
 \begin{figure}[H]
   %\raggedleft
   \includegraphics[width=0.6\linewidth]{img/season-outside_temperature.png}
-  \caption{Correlation of the datasets.}
+  \caption{Seasonal (weekly) decomposition of the outside temperature.}
   \label{fig:correlation}
 \end{figure}
-
-%Exclusion of precipitation`
-\begin{figure}[H]
-  %\raggedleft
-  \includegraphics[width=0.6\linewidth]{img/correlation.png}
-  \caption{Correlation of the datasets.}
-  \label{fig:correlation}
-\end{figure}
-
 \end{frame}
 
 \begin{frame}
 \frametitle{Methods}
+\framesubtitle{Sliding window}
+
+\begin{itemize}
+\item The prediction is learned not interfered
+\item maximum usage of features
+\item function is non-intuitive
+\end{itemize}
 
 %sliding window
 \begin{figure}[H]
-  %\raggedleft
-  \includegraphics[width=0.6\linewidth]{img/regpred.png}
-  \caption{Correlation of the datasets.}
+  \center
+  \includegraphics[width=0.4\linewidth]{img/regpred.png}
+  \caption{Input(green) and output(red) frames for regression(left), prediction(middle) and enhanced prediction(right).}
   \label{fig:correlation}
 \end{figure}
-%gradient boost
-%
+\end{frame}
 
+\begin{frame}
+\frametitle{Methods}
+\framesubtitle{Gradient boosting}
+
+%TODO
+\begin{itemize}
+\item .
+\end{itemize}
+
+
+\begin{figure}[H]
+  \includegraphics[width=0.6\linewidth]{img/GradientBoostingRegressor_day_error_without_some_params.png}
+  \caption{Feature analysis with the gradient boosting.}
+  \label{fig:gradientboost}
+\end{figure}
+
+%TODO
 \end{frame}
 
 \begin{frame}
 \frametitle{Conclusion}
 
+
+\begin{itemize}
+\item sliding window with DOY
+\item prediction varies
+\item precision is not optimal
+\end{itemize}
+
 \begin{figure}[H]
-  \includegraphics[width=0.6\linewidth]{img/predict-energy-53--0p520.png}
+  \includegraphics[width=0.8\linewidth]{img/predict-energy-53--0p520.png}
   \caption{Prediction of the energy using the sliding window approach.}
   \label{fig:Prediction}
 \end{figure}
-
-
-%best result:
-%sliding window with DOY
-%Prediction output
-
-%score/error
-%application conclusion
 
 \end{frame}
 
