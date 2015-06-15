@@ -62,17 +62,14 @@
 
 \begin{abstract}
 \textbf{Abstract:}
-Heat pumps are a sustainable way to transfer thermal energy into out away from builds to keep a comfortable temperature. But to operate a heating pump is not a trivial task, different building distribute the heat differently and weather with its chaotic nature has a major influence on the temperature flow. With an accurate prediction of the energy consumption, one can increase their efficiency and operating cost.
-Thus we want to predict the behaviour or an energy pump with respect to the weather.\\
-%TODO include method and conclusion
+Heat pumps are a sustainable way to transfer thermal energy into out away from builds to keep a comfortable temperature. But to operate a heating pump is not a trivial task, different building distribute the heat differently and weather with its chaotic nature has a major influence on the temperature flow. With an accurate prediction of the energy consumption, one can increase their efficiency and operating cost.//
+In this project, we trained a learning algorithm to predict the energy consumption of one building. Two methods, Gradient Boosting and Random Forests where used and insights from both methods combined. A random forest combined with a sliding window approach lead to the most accurate model with an $R^{2}$ error of 0.89.
 \end{abstract}
 
 \section{Data}
 \label{sec:data}
-%TODO: CHECK READ
-%what is the problem what is the data wheat is the purpose
 
-The Recogizer GmbH provided me a dataset of 4 sensor reading, three weather indicators and an accumulated energy consumption. In 242 days (between July 2014 to February 2015), over 1,300,000 data points where collected.
+The Recogizer GmbH provided a dataset of 4 sensor readings, three weather indicators and an accumulated energy consumption. In 242 days (between July 2014 to February 2015), over 1,300,000 data points where collected.
 
 \paragraph{Weather data:}
 The regional weather is from the official recordings of the "Deutsche Wetterdienst" (German weather service) and contains:
@@ -98,19 +95,9 @@ The energy in watt hours, calculated per day.
 
 \section{Analysis}
 \label{sec:analysis}
-
-%\subsection{Correlation}
-%TODO
-%\begin{figure}[H]
-%  %\raggedleft
-%  \includegraphics[width=0.6\linewidth]{img/correlation.png}
-%  \caption{Correlation of the datasets.}
-%  \label{fig:correlation}
-%\end{figure}
-
 \subsection{Seasonal decomposition}
-%TODO
-Our data has a seasonal trend which is shown in the figure \ref{fig:season_outside_temperature}. In the figure recordings of one whole week outside temperature is shown. We can see that peak is repeated every day with little offset. for this reason we introduced the day of the year(DOY) as a feature. The effect of introducing DOY in \ref{fig:RandomForestRegressor_day_error_without_some_params_DOY} 
+Our data has a seasonal trend which is shown in the figure \ref{fig:season_outside_temperature}. In the figure the seasonal trend of one whole week outside temperature is shown. We can see the repeating peaks every day. For this reason we introduced the day of the year(DOY) as a feature which allows the learning algorithm to include the seasonal effects. The effect of introducing DOY is shown in figure \ref{fig:RandomForestRegressor_day_error_without_some_params_DOY}
+
 \begin{figure}[H]
   \center
   \includegraphics[width=0.6\linewidth]{img/season-outside_temperature.png}
@@ -118,14 +105,6 @@ Our data has a seasonal trend which is shown in the figure \ref{fig:season_outsi
   \label{fig:season_outside_temperature}
 \end{figure}
 
-
-
-\begin{figure}[H]
-  \center
-  \includegraphics[width=1\linewidth]{img/RandomForestRegressor_day_error_without_some_params.png}
-  \caption{Random Forest with effect of removing each parameter}
-  \label{fig:RandomForestRegressor_day_error_without_some_params}
-\end{figure}
 
 \begin{figure}[H]
   \center
@@ -136,8 +115,16 @@ Our data has a seasonal trend which is shown in the figure \ref{fig:season_outsi
 
 
 \subsection{Exclusion of precipitation}	
-%TODO
-During analysis we assessed the importance of features, to study this we removed each feature and plotted the (Root Mean Squared Error)RMSE of the predictions it can be seen form the figure \ref{fig:RandomForestRegressor_day_error_without_precipation} that their is little or no effect on RMSE without precipitation.
+During analysis we assessed the importance of features. To study this we removed each feature and plotted the Root Mean Squared Error (RMSE) of the predictions. It can be seen form the figure \ref{fig:RandomForestRegressor_day_error_without_some_params} and figure \ref{fig:RandomForestRegressor_day_error_without_precipation}, that there is little to no effect on RMSE without precipitation.
+
+
+\begin{figure}[H]
+  \center
+  \includegraphics[width=1\linewidth]{img/RandomForestRegressor_day_error_without_some_params.png}
+  \caption{Random Forest with effect of removing each parameter}
+  \label{fig:RandomForestRegressor_day_error_without_some_params}
+\end{figure}
+
 
 \begin{figure}[H]
   \center
@@ -149,14 +136,9 @@ During analysis we assessed the importance of features, to study this we removed
 \section{Methods}
 \label{sec:methods}
 To find an optimal prediction, we analysed two methods: For the gradient boosting we took a standard implementation and looked for optimal parameter, where for the time shifting window approach we focussed on the preprocessing of the data.
-%TODO
 
-\subsection{sliding window}
-%TODO timeframe analysis
-
-%TODO check read
-As suggested in \cite{vafaeipour2014application} the sliding window approach was used to learn how to predict. In this approach the time series is split into windows or frames of input and output. Unlike in regression learning, those windows are shifted. Thus the learning algorithm does not learn the relation of the features at the same time, but their relation in the future. With this approach, it is possible to include all features as an input and select few of them as an output. This can be enhanced further by including predictable features into the input. These three methods are depicted in Figure \ref{fig:slidingwindow}.\\
-The random forest implementation we are using however can not handle input with more than one dimension. Thus we flatten the input to one dimension. Since the feature values are typically easily separable, we expect the random forest to recognize this flattening in an early step. We do not include this as an extra information into the trees.
+\subsection{Sliding Window}
+As suggested in \cite{vafaeipour2014application} the sliding window approach was used to learn how to predict. In this approach the time series is split into windows or frames of input and output. Unlike in regression learning, those windows are shifted. Thus the learning algorithm does not learn the relation of the features at the same time, but their relation in the future. With this approach, it is possible to include all features as an input and select few of them as an output. This can be enhanced further by including predictable features into the input. These three methods are depicted in Figure \ref{fig:slidingwindow}.
 \begin{figure}[H]
   \center
   \includegraphics[width=0.6\linewidth]{img/regpred.png}
@@ -164,36 +146,28 @@ The random forest implementation we are using however can not handle input with 
   \label{fig:correlation}
 \end{figure}
 
-\subsection{gradient boost}
-%TODO
-We compared Random Forest with Gradient boosting in which Random Forest outperformed the Gradient Boosting the results can be seen form the figure.
+\subsection{Gradient Boosting}
+Gradient Boosting is a performant way to regress functions for prediction. This quick learning time enabled us to run several sets of features and  plot the increase in error as seen in figure \ref{fig:GradientBoostingRegressor_day_error_without_some_params}. 
 
 \begin{figure}[H]
   \center
   \includegraphics[width=1\linewidth]{img/GradientBoostingRegressor_day_error_without_some_params.png}
-  \caption{Gradient Boosting Regression}
+  \caption{Error over time with the Gradient Boosting regression on several feature sets.}
   \label{fig:GradientBoostingRegressor_day_error_without_some_params}
 \end{figure}
 \newpage
 \section{Conclusion}
 \label{sec:conclusion}
-%best result:
-%sliding window with DOY
-%Prediction output
-We used sliding window approach with introduction of Day of the year and got an R2 score of 0.89. It can be seen in the figure \ref{fig:predict-energy} that random forest is able to predict the energy successfully based on averaged energy information.
-The gradient boosting was a good help in terms of prediction time, we analysed different accepts of our data on gradient boosting and then applied them on the random forests.
+The best $R^{2}$ score (0.89) of all runs was learned by a Random Forest combined with a sliding window approach, without precipitation and with the day of the year. It can be seen in the figure \ref{fig:predict-energy} that random forest is able to predict the energy successfully based on averaged energy information.\\
+The gradient boosting was a good help in terms of prediction time, we analysed different subsets of our data on gradient boosting and then applied them on the random forests.
 \begin{figure}[H]
   \includegraphics[width=0.8\linewidth]{img/predict-energy--0p890.png}
-  \caption{Prediction of the energy using the sliding window approach.}
+  \caption{Prediction (green) of the energy(blue) using the sliding window approach.}
   \label{fig:predict-energy}
 \end{figure}
-It is evident that the random forest are capable of predicting the energy consumption for 5 days in advance, In our study we tweaked the input with the sliding window approach and analysed the data with test runs with gradient boosting. The choice of random forest can be justified form the comparison with gradient boosting. we expect that the performance can be further improved by including the weather forecast, but this will greatly depend on the accuracy of the weather forecast, which in turn makes the performance of the regression deteriorate faster.
-%score/error
-%application conclusion
-
+It is evident that the random forest is capable of predicting the energy consumption for 5 days in advance. In our study we tweaked the input with the sliding window approach and analysed the data with test runs on gradient boosting. The choice of random forest can be justified form the comparison with gradient boosting. In addition, the rules of the single random trees can be interpreted by humans and thus checked by experts. We expect that the performance can be further improved by including the weather forecast, but this will make the prediction greatly depended on the accuracy of the weather forecast. Thus also is likely to make the performance of the regression deteriorate faster.
 
 %BIBLIOGRPAHY
-%TODO: check and fill the bibliography
 \bibliographystyle{plain}%amsalpha
 \bibliography{bib.bib}
 %\bibentry{}

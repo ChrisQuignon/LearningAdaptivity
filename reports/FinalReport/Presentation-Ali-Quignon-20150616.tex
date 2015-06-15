@@ -88,18 +88,32 @@
 \frametitle{Analysis}
 
 \begin{itemize}
-\item seasonal decomposition
-\item (time shift) correlation 
-\item parameter runs
+\item Seasonal decomposition
+\item (Time shift) Correlation 
+\item Parameter runs
 \end{itemize}
 
+
+
 \begin{figure}[H]
-  \center
-  \includegraphics[width=0.6\linewidth]{img/season-outside_temperature.png}
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[height=0.6\linewidth]{img/season-outside_temperature.png}
   \caption{Seasonal (weekly) decomposition of the outside temperature.}
-  \label{fig:correlation}
+  %\label{fig:}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[height=0.6\linewidth]{img/RandomForestRegressor_day_error_without_some_params_max_depth.png}
+  \caption{Random Forest prediction RMS}
+  %\label{fig:} 
+\end{minipage}
 \end{figure}
+
+
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Methods}
@@ -107,8 +121,8 @@
 
 \begin{itemize}
 \item The prediction is learned not interfered
-\item maximum usage of features
-\item function is non-intuitive
+\item Maximum usage of features
+\item Function is non-intuitive
 \end{itemize}
 
 %sliding window
@@ -145,10 +159,10 @@
 
 
 \begin{itemize}
-\item sliding window with DOY, without precipitation
+\item Sliding window with DOY, without precipitation
 \item $0.89 R^{2}$ error
-\item prediction varies and is not optimal
-\item long learning time
+\item Prediction varies and is not optimal
+\item Long learning time
 \end{itemize}
 
 \begin{figure}[H]
