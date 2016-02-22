@@ -79,7 +79,7 @@ The regional weather is from the official recordings of the "Deutsche Wetterdien
 \item Relative air humidity in percent
 \item Precipitation in mm (1 litre per square meter)
 \end{itemize}
-
+\newpage
 \paragraph{Sensor data:}
 The Measurements from the systems are:
 
@@ -96,7 +96,7 @@ The energy in watt hours, calculated per day.
 \section{Analysis}
 \label{sec:analysis}
 \subsection{Seasonal decomposition}
-Our data has a seasonal trend which is shown in the figure \ref{fig:season_outside_temperature}. In the figure the seasonal trend of one whole week outside temperature is shown. We can see the repeating peaks every day. For this reason we introduced the day of the year(DOY) as a feature which allows the learning algorithm to include the seasonal effects. The effect of introducing DOY is shown in figure \ref{fig:RandomForestRegressor_day_error_without_some_params_DOY}
+Our data has a seasonal trend which is shown in the figure \ref{fig:season_outside_temperature}. In the figure the seasonal trend of one whole week outside temperature is shown. We can see the repeating peaks for every day. For this reason we introduced the day of the year(DOY) as a feature which allows the learning algorithm to include the seasonal effects. The effect of introducing DOY is shown in figure \ref{fig:RandomForestRegressor_day_error_without_some_params_DOY}
 
 \begin{figure}[H]
   \center
